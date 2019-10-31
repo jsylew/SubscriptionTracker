@@ -36,8 +36,8 @@
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-
 </script>
+
 <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
 <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
 
@@ -45,9 +45,6 @@
 // Initialize the FirebaseUI Widget using Firebase.
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
-</script>
-
-<script>
     var uiConfig = {
   callbacks: {
     signInSuccessWithAuthResult: function(authResult, redirectUrl) {
@@ -79,9 +76,7 @@
   // Privacy policy url.
   privacyPolicyUrl: '<your-privacy-policy-url>'
 };
-</script>
 
-<script>
 // The start method will wait until the DOM is loaded.
     ui.start('#firebaseui-auth-container', uiConfig);
 </script>
