@@ -5,79 +5,102 @@
         text-align: center;
       }
     </style>
+
+  <!-- The surrounding HTML is left untouched by FirebaseUI.
+      Your app may use that space for branding, controls and other customizations.-->
+      <h1>Welcome to Subscrption Tracker</h1>
+      <div id="firebaseui-auth-container"></div>
+      <div id="loader">Loading...</div>
+
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+      <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-firestore.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAN7pTa8JRlh933bSThUo7wLGgh-IlfJGw",
+      authDomain: "projectauth-f9d3b.firebaseapp.com",
+      databaseURL: "https://fir-f9d3b.firebaseio.com",
+      projectId: "projectauth-f9d3b",
+      storageBucket: "projectauth-f9d3b.appspot.com",
+      messagingSenderId: "147481253692",
+      appId: "1:147481253692:web:5c99b0f5ddb5cc87efb039"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    // Reference to firestore db
+    var db = firebase.firestore();
+  </script>
+
+  <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+
+  <script>
+  // Initialize the FirebaseUI Widget using Firebase.
+      var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+      var uiConfig = {
+    callbacks: {
+      signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+        // User successfully signed in.
+        // Return type determines whether we continue the redirect automatically
+        // or whether we leave that to developer to handle.
+        return true;
+      },
+      uiShown: function() {
+        // The widget is rendered.
+        // Hide the loader.
+        document.getElementById('loader').style.display = 'none';
+      }
+    },
+    // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+    signInFlow: 'popup',
+    signInSuccessUrl: 'main.html',
+    signInOptions: [
+      // Leave the lines as is for the providers you want to offer your users.
+      // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+      // firebase.auth.GithubAuthProvider.PROVIDER_ID,
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      // firebase.auth.PhoneAuthProvider.PROVIDER_ID
+    ],
+    // Terms of service url.
+    tosUrl: '<your-tos-url>',
+    // Privacy policy url.
+    privacyPolicyUrl: '<your-privacy-policy-url>'
+  };
+
+  // The start method will wait until the DOM is loaded.
+      ui.start('#firebaseui-auth-container', uiConfig);
+  </script>
 </head>
 
-
 <body>
-<!-- The surrounding HTML is left untouched by FirebaseUI.
-     Your app may use that space for branding, controls and other customizations.-->
-     <h1>Welcome to Subscrption Tracker</h1>
-     <div id="firebaseui-auth-container"></div>
-     <div id="loader">Loading...</div>
+  <h1>Let's read from the database: <span id = data>....</span></h1>
 
-
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-     <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
-
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyAN7pTa8JRlh933bSThUo7wLGgh-IlfJGw",
-    authDomain: "projectauth-f9d3b.firebaseapp.com",
-    databaseURL: "https://fir-f9d3b.firebaseio.com",
-    projectId: "projectauth-f9d3b",
-    storageBucket: "projectauth-f9d3b.appspot.com",
-    messagingSenderId: "147481253692",
-    appId: "1:147481253692:web:5c99b0f5ddb5cc87efb039"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-</script>
-
-<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
-<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-
-<script>
-// Initialize the FirebaseUI Widget using Firebase.
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-    var uiConfig = {
-  callbacks: {
-    signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-      // User successfully signed in.
-      // Return type determines whether we continue the redirect automatically
-      // or whether we leave that to developer to handle.
-      return true;
-    },
-    uiShown: function() {
-      // The widget is rendered.
-      // Hide the loader.
-      document.getElementById('loader').style.display = 'none';
-    }
-  },
-  // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-  signInFlow: 'popup',
-  signInSuccessUrl: 'main.html',
-  signInOptions: [
-    // Leave the lines as is for the providers you want to offer your users.
-    // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-    // firebase.auth.GithubAuthProvider.PROVIDER_ID,
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    // firebase.auth.PhoneAuthProvider.PROVIDER_ID
-  ],
-  // Terms of service url.
-  tosUrl: '<your-tos-url>',
-  // Privacy policy url.
-  privacyPolicyUrl: '<your-privacy-policy-url>'
-};
-
-// The start method will wait until the DOM is loaded.
-    ui.start('#firebaseui-auth-container', uiConfig);
-</script>
+  <script>
+    db.collection('students').doc('Rachel').set({
+      age: 19,
+      hair: 'brown',
+      present: true
+    })
+      .then(function() {
+        console.log('success');
+      })
+      .catch(function(error) {
+        console.log('err');
+      })
+    
+    db.collection('students').doc('Rachel')
+      .onSnapshot(function (c) {
+        document.getElementById('data').innerHTML = c.data().present;
+      })
+  </script>
 </body>
