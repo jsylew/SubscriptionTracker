@@ -14,21 +14,37 @@
 
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
+<<<<<<< HEAD
   <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
 
   <!-- TODO: Add SDKs for Firebase products that you want to use
       https://firebase.google.com/docs/web/setup#available-libraries -->
+=======
+  <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+      <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-firestore.js"></script>
+>>>>>>> 1803f8b19a3dc230f575963234ab02bb76b10177
 
   <script>
     // Your web app's Firebase configuration
     var firebaseConfig = {
       apiKey: "AIzaSyAN7pTa8JRlh933bSThUo7wLGgh-IlfJGw",
+<<<<<<< HEAD
       authDomain: "fir-f9d3b.firebaseapp.com",
       databaseURL: "https://fir-f9d3b.firebaseio.com",
       projectId: "fir-f9d3b",
       storageBucket: "fir-f9d3b.appspot.com",
+=======
+      authDomain: "projectauth-f9d3b.firebaseapp.com",
+      databaseURL: "https://fir-f9d3b.firebaseio.com",
+      projectId: "projectauth-f9d3b",
+      storageBucket: "projectauth-f9d3b.appspot.com",
+>>>>>>> 1803f8b19a3dc230f575963234ab02bb76b10177
       messagingSenderId: "147481253692",
       appId: "1:147481253692:web:5c99b0f5ddb5cc87efb039"
     };
@@ -83,6 +99,7 @@
 </head>
 
 <body>
+<<<<<<< HEAD
   <script src="setup_firebase.js"></script>
   <h1>Let's read from the database: <span id = data>....</span></h1>
   <div id="user_names">Click for "User Names"</div>
@@ -143,5 +160,26 @@
     //   .onSnapshot(function (c) {
     //     document.getElementById('data').innerHTML = c.data().present;
     //   })
+=======
+  <h1>Let's read from the database: <span id = data>....</span></h1>
+
+  <script>
+    db.collection('students').doc('Rachel').set({
+      age: 19,
+      hair: 'brown',
+      present: true
+    })
+      .then(function() {
+        console.log('success');
+      })
+      .catch(function(error) {
+        console.log('err');
+      })
+    
+    db.collection('students').doc('Rachel')
+      .onSnapshot(function (c) {
+        document.getElementById('data').innerHTML = c.data().present;
+      })
+>>>>>>> 1803f8b19a3dc230f575963234ab02bb76b10177
   </script>
 </body>
