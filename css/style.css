@@ -127,6 +127,13 @@ button.login {
     color: #2B3535;
 }
 
+#firebaseui-auth-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 [tabindex="-1"]:focus {
 outline: 0 !important;
 }
