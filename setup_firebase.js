@@ -21,6 +21,13 @@ usernamesRef.doc('user3').set({
     description: "testing. I'm Netflix, too."
 })
 
+usernamesRef.doc('user4').set({
+    email: "user4@gmail.com",
+    name: "CHRIS",
+    nickname: "PYTHON GOD",
+    description: "testing. I'm Netflix, too."
+})
+
 var subscriptionsRef = db.collection('users').doc('user1').collection('subscriptions');
 
 subscriptionsRef.doc('sub1').set({

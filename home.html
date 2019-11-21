@@ -106,8 +106,10 @@
                 querySnapshot.forEach(function (doc) {
                     var para = document.createElement("p");
                     document.getElementById("results2").appendChild(para);
-                    var node = document.createTextNode(doc.data().date);
-                    para.appendChild(node)
+                    var node1 = document.createTextNode(doc.data().date);
+                    var node2 = document.createTextNode(doc.data().duration);
+                    para.appendChild(node1)
+                    para.appendChild(node2)
                 })
             })
         }
