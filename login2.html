@@ -73,6 +73,19 @@
 
             // The start method will wait until the DOM is loaded.
             ui.start('#firebaseui-auth-container', uiConfig);
+            var user = firebase.auth().currentUser;
+            var name, email, photoUrl, uid, emailVerified;
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    name = user.displayName;
+                    email = user.email;
+                    uid = user.uid;
+                    localStorage.setItem('users', user.displayName);
+                    localStorage.setItem('users', user.email);
+                    localStorage.setItem('users', user.uid);
+                }
+            });
+
         </script>
 
     </div>
