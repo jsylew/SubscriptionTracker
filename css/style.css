@@ -77,6 +77,7 @@ background-color: #fff;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    margin-bottom: 2em;
 }
 
 .hero_text {
@@ -166,6 +167,25 @@ button.login {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.section {
+    padding: 1em 2em;
+}
+
+h4.section_title {
+    font-weight: normal;
+    font-size: 1.25em;
+    color: #2B3535;
+    letter-spacing: -0.333333px;
+}
+
+.tracker {
+    position: absolute;
+    height: 2em;
+    width: 100%;
+    background: rgba(53, 179, 171, 0.2);
+    border-radius: 5px
 }
 
 [tabindex="-1"]:focus {
