@@ -77,10 +77,16 @@
     <script src="setup_firebase.js"></script>
     <h1>Let's read from the database: <span id=data>....</span></h1>
     <div id="users">TESTING. Click for "User Names"</div>
+    <div id="usages">TESTING. Click for "Usages"</div>
     <div id="results"></div>
+    <div id="results2"></div>
     <script>
         document.getElementById("users").addEventListener("click", function () {
             GetList("users");
+        })
+
+        document.getElementById("usages").addEventListener("click", function () {
+            GetUsage("users/user1/subscriptions/sub1/usages");
         })
 
 
@@ -94,6 +100,18 @@
                 })
             })
         }
+
+        function GetUsage(category) {
+            var dbRef = db.collection(category).get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    var para = document.createElement("p");
+                    document.getElementById("results2").appendChild(para);
+                    var node = document.createTextNode(doc.data().date);
+                    para.appendChild(node)
+                })
+            })
+        }
+        
     </script>
 
 </body>
