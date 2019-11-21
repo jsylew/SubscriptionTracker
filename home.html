@@ -7,6 +7,60 @@
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Tracker App</title>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAN7pTa8JRlh933bSThUo7wLGgh-IlfJGw",
+            authDomain: "fir-f9d3b.firebaseapp.com",
+            databaseURL: "https://fir-f9d3b.firebaseio.com",
+            projectId: "fir-f9d3b",
+            storageBucket: "fir-f9d3b.appspot.com",
+            messagingSenderId: "147481253692",
+            appId: "1:147481253692:web:5c99b0f5ddb5cc87efb039"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        // Reference to firestore db
+        var db = firebase.firestore();
+    </script>
+
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+
+    <script>
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+        var uiConfig = {
+            callbacks: {
+                signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+                    return true;
+                },
+                uiShown: function () {
+                    document.getElementById('loader').style.display = 'none';
+                }
+            },
+            // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+            signInFlow: 'popup',
+            signInSuccessUrl: 'main.html',
+            signInOptions: [
+                firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            ],
+            tosUrl: '<your-tos-url>',
+            privacyPolicyUrl: '<your-privacy-policy-url>'
+        };
+
+        // The start method will wait until the DOM is loaded.
+        ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
 </head>
 
 <body>
@@ -18,8 +72,30 @@
             <h1 id="header">TRACKER APP</h1>
         </div>
     </div>
-    
+
     <!-- STARRED TRACKERS -->
+    <script src="setup_firebase.js"></script>
+    <h1>Let's read from the database: <span id=data>....</span></h1>
+    <div id="users">TESTING. Click for "User Names"</div>
+    <div id="results"></div>
+    <script>
+        document.getElementById("users").addEventListener("click", function () {
+            GetList("users");
+        })
+
+
+        function GetList(category) {
+            var dbRef = db.collection(category).get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    var para = document.createElement("p");
+                    document.getElementById("results").appendChild(para);
+                    var node = document.createTextNode(doc.data().name);
+                    para.appendChild(node)
+                })
+            })
+        }
+    </script>
+
 </body>
 
 </html>
