@@ -170,22 +170,64 @@ button.login {
 }
 
 .section {
-    padding: 1em 2em;
+    padding: 1em 1.7em;
 }
 
 h4.section_title {
     font-weight: normal;
-    font-size: 1.25em;
+    font-size: 1.2em;
     color: #2B3535;
     letter-spacing: -0.333333px;
 }
 
 .tracker {
-    position: absolute;
-    height: 2em;
+    position: relative;
+    height: 3em;
+    padding: 0.6em 0.5em;
     width: 100%;
+    margin-bottom: 1em;
     background: rgba(53, 179, 171, 0.2);
-    border-radius: 5px
+    border-radius: 5px;
+    display: table;
+}
+
+.col-1 {
+    width: 70%;
+    display: table-cell;
+}
+
+.col-2 {
+    text-align: right;
+    width: 30%;
+    display: table-cell;
+}
+
+.sub-col-1 {
+    width: 33%;
+    display: table-cell;
+    text-align: center;
+}
+
+.sub-col-2 {
+    width: 33%;
+    display: table-cell;
+    text-align: center;
+}
+
+.sub-col-3 {
+    width: 33%;
+    display: table-cell;
+    text-align: center;
+}
+
+p.starred-trackers {
+    color: rgba(43, 53, 53, 0.7);
+    font-size: 1em;
+    margin-bottom: 0;
+}
+
+.sub-icons {
+    width: 85%;
 }
 
 [tabindex="-1"]:focus {
