@@ -230,6 +230,15 @@ p.starred-trackers {
     width: 85%;
 }
 
+.display_time {
+    text-align: center;
+}
+
+h1.current_time {
+    color: #35B3AB;
+    font-size: 4em;;
+}
+
 [tabindex="-1"]:focus {
 outline: 0 !important;
 }
