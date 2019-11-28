@@ -1,0 +1,60 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Tracker App</title>
+
+</head>
+
+<body>
+    <!-- HEADER -->
+    <div class="header_image">
+        <div class="header_block">
+        </div>
+        <div class="header_text">
+            <h1 id="header">TRACKER APP</h1>
+        </div>
+    </div>
+
+    <div id='imageWrapper'></div>
+    <div id='subTitle'></div>
+    <div id='usedWrapper'></div>
+    <div id='percentWrapper'></div>
+    <div id='limitWrapper'></div>
+    <div id='limitValueWrapper'></div>
+    <div id='usageGraphWrapper'></div>
+    <div id='graphWrapper'></div>
+
+    <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-firestore.js"></script>
+    <script src="js/firebase_setup.js"></script>
+    <script src="js/app.js"></script>
+    
+
+    <script>
+        function setTitle(subTitle) {
+            let titleStr = document.createElement('p');
+            titleStr.innerHTML = titleCase(subTitle);
+            document.getElementById('subTitle').appendChild(titleStr);
+        }
+
+        function setSubImage(subTitle) {
+            let appImage = document.createElement('img');
+            appImage.src = imgsrcs[subTitle];
+            document.getElementById('imageWrapper').appendChild(appImage);
+        }
+
+
+
+
+        let subTitle = localStorage.getItem('subName');
+        setTitle(subTitle);
+    </script>
+</body>
+
+</html>
