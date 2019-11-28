@@ -75,9 +75,9 @@
 
     <!-- SUBSCRIPTIONS -->
     <div class="section">
-        <h4 class="section_title">SUBSCRIPTIONS</h4>
+        <h4 class="sectionTitle">SUBSCRIPTIONS</h4>
         <div class="sub-col-1">
-            <img class="sub-icons" id="netflix" src="images/netflix.png">
+            <a href="sub-netflix.html"><img class="sub-icons" id="netflix" src="images/netflix.png"></a>
         </div>
         <div class="sub-col-2">
             <img class="sub-icons" id="spotify" src="images/spotify.png">
@@ -97,6 +97,10 @@
     <script src="js/app.js"></script>
 
     <script>
+        let display = document.getElementById("time");
+        let startTime, endTime, newTime, timeInterval;
+        let run = false;
+        
         function setStarredTrackers(userID) {
             let ref = db.doc(`users/${userID}`).get().then(function (doc) {
                 let user = doc.data();
@@ -206,9 +210,7 @@
         // setStarredTrackers('user 1'); // Replace to generic user later!
         // setSubscriptions('user 1'); // Replace to generic user later!
 
-        let display = document.getElementById("time");
-        let startTime, endTime, newTime, timeInterval;
-        let run = false;
+        
         let userID = localStorage.getItem('userID')
 
     </script>
