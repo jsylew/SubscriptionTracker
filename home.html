@@ -43,33 +43,34 @@
         <div id='sub5' class='subscription'></div>
         <div id='sub6' class='subscription'></div>
     </div> -->
-    <div id="firebaseui-auth-container"></div>
+        <div id="firebaseui-auth-container"></div>
 
 
-    <div id='fav1' class="tracker">
-        <div class="col-1">
-            <p id="starred-1" class="starred-trackers">Netflix</p>
+        <div id='fav1' class="tracker">
+            <div class="col-1">
+                <p id="starred-1" class="starred-trackers">Netflix</p>
+            </div>
+            <div class="col-2">
+                <img id="starred-1-btn" class="time-btn" width="25px" src="images/record.png"
+                    onclick=(countTime(this.id))>
+            </div>
         </div>
-        <div class="col-2">
-            <img id="starred-1-btn" class="time-btn" width="25px" src="images/record.png" onclick=(countTime(this.id))>
+        <div id='fav2' class="tracker">
+            <div class="col-1">
+                <p id="starred-2" class="starred-trackers">Spotify</p>
+            </div>
+            <div class="col-2">
+                <img id="starred-2-btn" class="time-btn" src="images/record.png" onclick=(countTime(this.id))>
+            </div>
         </div>
-    </div>
-    <div id='fav2' class="tracker">
-        <div class="col-1">
-            <p id="starred-2" class="starred-trackers">Spotify</p>
+        <div id='fav3' class="tracker">
+            <div class="col-1">
+                <p id="starred-3" class="starred-trackers">Amazon Prime</p>
+            </div>
+            <div class="col-2">
+                <img id="starred-3-btn" class="time-btn" src="images/record.png" onclick=(countTime(this.id))>
+            </div>
         </div>
-        <div class="col-2">
-            <img id="starred-2-btn" class="time-btn" src="images/record.png" onclick=(countTime(this.id))>
-        </div>
-    </div>
-    <div id='fav3' class="tracker">
-        <div class="col-1">
-            <p id="starred-3" class="starred-trackers">Amazon Prime</p>
-        </div>
-        <div class="col-2">
-            <img id="starred-3-btn" class="time-btn" src="images/record.png" onclick=(countTime(this.id))>
-        </div>
-    </div>
     </div>
 
     <!-- SUBSCRIPTIONS -->
@@ -163,17 +164,14 @@
         }
 
         function updateUserTime(value) {
-            let ref = db.doc(`users/user 1`).get().then(function (doc) {
+            let ref = db.doc(`users/${userID}`).get().then(function (doc) {
                 let user = doc.data();
-                Promise.all([user]).then(function () {
-                    let curr = user.time;
-                    Promise.all([value, curr]).then(function () {
-                        db.collection("users").doc('user 1').set({
-                            'time': value + curr
-                        })
-                        console.log("merge successful")
-                    })
-
+                Promise.all([user, value]).then(function () {
+                    db.collection("users").doc(`${userID}`).set({
+                        'time': value,
+                    }, { merge: true})
+                    console.log()
+                    console.log("merge successful")
                 })
             })
         }
