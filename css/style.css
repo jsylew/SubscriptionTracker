@@ -173,7 +173,7 @@ button.login {
     padding: 1em 1.7em;
 }
 
-h4.section_title {
+h4.sectionTitle {
     font-weight: normal;
     font-size: 1.2em;
     color: #2B3535;
@@ -220,7 +220,7 @@ h4.section_title {
     text-align: center;
 }
 
-p.starred-trackers {
+p.starredTrackers {
     color: rgba(43, 53, 53, 0.7);
     font-size: 1em;
     margin-bottom: 0;
@@ -230,11 +230,11 @@ p.starred-trackers {
     width: 85%;
 }
 
-.display_time {
+.displayTime {
     text-align: center;
 }
 
-h1.current_time {
+h1.currentTime {
     color: #35B3AB;
     font-size: 4em;;
 }

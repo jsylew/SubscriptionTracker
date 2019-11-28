@@ -76,16 +76,16 @@
     <!-- STARRED TRACKERS -->
     <script src="setup_firebase.js"></script>
     <div class="section">
-        <h4 class="section_title">STARRED TRACKERS</h4>
-        <div class="display_time">
-            <h1 class="current_time"></h1>
+        <h4 class="sectionTitle">STARRED TRACKERS</h4>
+        <div class="displayTime">
+            <h1 id="time" class="currentTime"></h1>
         </div>
         <div class="tracker">
             <div class="col-1">
                 <p id="starred-1" class="starred-trackers">Netflix</p>
             </div>
             <div class="col-2">
-                <img id="starred-1-record" width="25px" src="images/record.png">
+                <img id="starred-1-btn" class="time-btn" width="25px" src="images/record.png" onclick=(countTime(this.id))>
             </div>
         </div>
         <div class="tracker">
@@ -93,7 +93,7 @@
                 <p id="starred-2" class="starred-trackers">Spotify</p>
             </div>
             <div class="col-2">
-                <img id="starred-2-btn" src="images/record.png">
+                <img id="starred-2-btn" class="time-btn" src="images/record.png" onclick=(countTime(this.id))>
             </div>
         </div>
         <div class="tracker">
@@ -101,12 +101,12 @@
                 <p id="starred-3" class="starred-trackers">Amazon Prime</p>
             </div>
             <div class="col-2">
-                <img id="starred-3-btn" src="images/record.png">
+                <img id="starred-3-btn" class="time-btn" src="images/record.png" onclick=(countTime(this.id))>
             </div>
         </div>
     </div>
 
-    <!-- STARRED TRACKERS -->
+    <!-- SUBSCRIPTIONS -->
     <div class="section">
         <h4 class="section_title">SUBSCRIPTIONS</h4>
         <div class="sub-col-1">
@@ -125,6 +125,49 @@
     <div id="results"></div>
     <div id="results2"></div> 
 
+    <!-- STOPWATCH -->
+    <script>
+        let display = document.getElementById("time");
+        let startTime, endTime, newTime, timeInterval;
+        let run = false;
+
+        function countTime(btnID) {
+            if (!run) {
+                startTime = new Date().getTime();
+                timeInterval = setInterval(displayTime, 1000);
+                run = true;
+                document.getElementById(btnID).src="images/stop.png";
+            }
+            else {
+                run = false;
+                document.getElementById(btnID).src="images/record.png";
+                clearInterval(timeInterval);
+            }
+        }
+
+        function displayTime() {
+            endTime = new Date().getTime();
+            newTime = endTime - startTime;
+            let hours = Math.floor((newTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((newTime % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((newTime % (1000 * 60)) / 1000);
+
+            if (hours < 10) {
+                hours = "0" + hours;
+            }
+
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
+            display.innerHTML = hours + ":" + minutes + ":" + seconds;
+        }
+    </script>
+
+    <!-- DATABASE-->
     <script>
         document.getElementById("users").addEventListener("click", function () {
             GetList("users");
