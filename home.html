@@ -100,7 +100,7 @@
         let display = document.getElementById("time");
         let startTime, endTime, newTime, timeInterval;
         let run = false;
-        
+
         function setStarredTrackers(userID) {
             let ref = db.doc(`users/${userID}`).get().then(function (doc) {
                 let user = doc.data();
@@ -168,17 +168,43 @@
         }
 
         function updateUserTime(value) {
+            let date = new Date().toTimeString();
             let ref = db.doc(`users/${userID}`).get().then(function (doc) {
                 let user = doc.data();
                 Promise.all([user, value]).then(function () {
-                    db.collection("users").doc(`${userID}`).set({
+                    db.collection("users").doc(`${userID}`).collection("netflix").doc(date).set({
                         'time': value,
-                    }, { merge: true})
-                    console.log()
-                    console.log("merge successful")
+                    })
+                    console.log("merge successful");
                 })
             })
         }
+
+        // function updateUserTime(value) {
+        //     let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+        //         let user = doc.data();
+        //         Promise.all([user, value]).then(function () {
+        //             db.collection("users").doc(`${userID}`).set({
+        //                 'time': value,
+
+        //             }, { merge: true})
+        //             console.log("merge successful");
+        //         })
+        //     })
+        // }
+        // let timeArray = [];
+        // function updateUserTime(value) {
+        //     let ref = db.doc("users/${userID}").get().then(function (doc) {
+        //         console.log("this is " + ref);
+        //         let user = doc.data();
+        //         db.collection("users").doc(`${userID}`).set({
+        //             'time': timeArray.push(value),
+        //         }, { merge: true })
+        //         console.log(timeArray);
+        //         console.log("merge successful");
+        //     })
+        // }
+
 
         function displayTime() {
             endTime = new Date().getTime();
@@ -210,7 +236,7 @@
         // setStarredTrackers('user 1'); // Replace to generic user later!
         // setSubscriptions('user 1'); // Replace to generic user later!
 
-        
+
         let userID = localStorage.getItem('userID')
 
     </script>
