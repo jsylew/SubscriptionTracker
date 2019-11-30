@@ -21,7 +21,7 @@
 
     <!-- GREETINGS-->
     <div class="greeting">
-        <p id="userName">USER NAME</p>
+        <p id="userInfoID">USER INFO</p>
     </div>
 
     <!-- SUBSCRIPTIONS -->
@@ -253,14 +253,15 @@
         // setStarredTrackers('user 1'); // Replace to generic user later!
         // setSubscriptions('user 1'); // Replace to generic user later!
 
-        let userName = localStorage.getItem('userName');
         let userID = localStorage.getItem('userID')
+        let userName = localStorage.getItem('userName');
+        let userEmail = localStorage.getItem('userEmail');
 
-        function displayUserName() {
-            document.getElementById("userName").innerHTML = `Hello, ${userName}`
+        function displayUserInfo() {
+            document.getElementById("userInfoID").innerHTML = `Hello, ${userName} (${userEmail})`
         }
 
-        displayUserName();
+        displayUserInfo();
 
     </script>
 
