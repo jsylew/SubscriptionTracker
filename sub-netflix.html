@@ -21,8 +21,8 @@
     <div class="section">
         <h4 class="sectionTitle">Netflix Usage Records</h4>
     </div>
-    <div>
-        <p class="section" id="sectionID"></p>
+    <div id="sectionID">
+        <p class="section" ></p>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
@@ -40,6 +40,27 @@
         function timeHistory() {
             myHistory += document.write(mySub + " " + myDate + " " + myTime + " seconds");
         }
+
+        function getLogs(userID) {
+            db.collection("users").doc(`${userID}`).collection("netflix").get().then(function (snapshot) {
+                snapshot.forEach(function(doc) {
+                    displayUsage(doc.id, doc.data());
+                    console.log(doc.id, " => ", doc.data());
+                });
+            })
+            .catch(function(error) {
+                console.log("Error getting documents: ", error);
+            });
+        }
+
+        function displayUsage(id, data) {
+            console.log(id, data, typeof(data));
+            let log = document.createElement("p");
+            log.innerHTML = id + ": " + data["time"];
+            document.getElementById("sectionID").appendChild(log);
+            // document.getElementById("sectionID").innerHTML = id + ": " + data["time"];
+        }
+
         
         function getTime(userID) {
             let ref = db.doc(`users/${userID}`).get().then(function (doc) {
@@ -50,12 +71,14 @@
             })
         }
 
-        let tempuserID = localStorage.getItem('userID')
-        Promise.all([tempuserID]).then(function () {
-            getTime(tempuserID)
-        })
+        let tempuserID = localStorage.getItem('userID');
+        // Promise.all([tempuserID]).then(function () {
+        //     getTime(tempuserID);
+        //     getLogs(tempuserID);
+        // })
 
-        timeHistory();
+        // timeHistory();
+        getLogs(tempuserID);
 
     </script>
 </body>
