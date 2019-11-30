@@ -173,7 +173,7 @@
         }
 
         function updateUserTime(value, btnID) {
-            let date = new Date().toTimeString();
+            let date = new Date().toDateString() + " " + new Date().toTimeString();
             let ref = db.doc(`users/${userID}`).get().then(function (doc) {
                 let user = doc.data();
                 Promise.all([user, value]).then(function () {
