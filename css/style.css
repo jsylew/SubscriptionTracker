@@ -10211,4 +10211,14 @@ body {
     border-color: #dee2e6;
 }
 }
+
+.greeting {
+    color: #35B3AB;
+    position: fixed;
+    left: 3.5%;
+    top: 16%;
+    font-size: x-large;
+
+
+}
 /*# sourceMappingURL=bootstrap.css.map */
