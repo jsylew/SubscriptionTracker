@@ -62,14 +62,14 @@
         }
 
         
-        function getTime(userID) {
-            let ref = db.doc(`users/${userID}`).get().then(function (doc) {
-                let user = doc.data();
-                Promise.all([user]).then(function () {
-                    // document.getElementById("sectionID").innerHTML = myDate + " " + myTime + " seconds"
-                })
-            })
-        }
+        // function getTime(userID) {
+        //     let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+        //         let user = doc.data();
+        //         Promise.all([user]).then(function () {
+        //             // document.getElementById("sectionID").innerHTML = myDate + " " + myTime + " seconds"
+        //         })
+        //     })
+        // }
 
         let tempuserID = localStorage.getItem('userID');
         // Promise.all([tempuserID]).then(function () {
