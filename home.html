@@ -51,8 +51,7 @@
                 <p id="starred-1" class="starred-trackers">Netflix</p>
             </div>
             <div class="col-2">
-                <img id="netflix" class="time-btn" width="25px" src="images/record.png"
-                    onclick=(countTime(this.id))>
+                <img id="netflix" class="time-btn" width="25px" src="images/record.png" onclick=(countTime(this.id))>
             </div>
         </div>
         <div id='fav2' class="tracker">
@@ -162,9 +161,15 @@
                 }
                 endTime = new Date().getTime()
                 let sessionTime = Math.floor((endTime - startTime) / 1000);
-                console.log(sessionTime)
-                updateUserTime(sessionTime, btnID);
+                let strSessionTime = sessionTime.toString();
+                updateUserTime(strSessionTime, btnID);
             }
+            let today = new Date();
+            let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            let dateTime = date + ' ' + time;
+            let myDate = localStorage.setItem('date', date);
+            console.log(dateTime);
         }
 
         function updateUserTime(value, btnID) {
@@ -175,8 +180,12 @@
                     db.collection("users").doc(`${userID}`).collection(btnID).doc(date).set({
                         'time': value,
                     })
+                    localStorage.setItem('subName', btnID);
+                    localStorage.setItem('date', date);
+                    localStorage.setItem('time', value);
                 })
             })
+
         }
 
         // function updateUserTime(value) {
