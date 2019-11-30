@@ -51,7 +51,7 @@
                 <p id="starred-1" class="starred-trackers">Netflix</p>
             </div>
             <div class="col-2">
-                <img id="starred-1-btn" class="time-btn" width="25px" src="images/record.png"
+                <img id="netflix" class="time-btn" width="25px" src="images/record.png"
                     onclick=(countTime(this.id))>
             </div>
         </div>
@@ -60,7 +60,7 @@
                 <p id="starred-2" class="starred-trackers">Spotify</p>
             </div>
             <div class="col-2">
-                <img id="starred-2-btn" class="time-btn" src="images/record.png" onclick=(countTime(this.id))>
+                <img id="spotify" class="time-btn" src="images/record.png" onclick=(countTime(this.id))>
             </div>
         </div>
         <div id='fav3' class="tracker">
@@ -68,7 +68,7 @@
                 <p id="starred-3" class="starred-trackers">Amazon Prime</p>
             </div>
             <div class="col-2">
-                <img id="starred-3-btn" class="time-btn" src="images/record.png" onclick=(countTime(this.id))>
+                <img id="amazon" class="time-btn" src="images/record.png" onclick=(countTime(this.id))>
             </div>
         </div>
     </div>
@@ -163,19 +163,18 @@
                 endTime = new Date().getTime()
                 let sessionTime = Math.floor((endTime - startTime) / 1000);
                 console.log(sessionTime)
-                updateUserTime(sessionTime);
+                updateUserTime(sessionTime, btnID);
             }
         }
 
-        function updateUserTime(value) {
+        function updateUserTime(value, btnID) {
             let date = new Date().toTimeString();
             let ref = db.doc(`users/${userID}`).get().then(function (doc) {
                 let user = doc.data();
                 Promise.all([user, value]).then(function () {
-                    db.collection("users").doc(`${userID}`).collection("netflix").doc(date).set({
+                    db.collection("users").doc(`${userID}`).collection(btnID).doc(date).set({
                         'time': value,
                     })
-                    console.log("merge successful");
                 })
             })
         }
