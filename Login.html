@@ -87,6 +87,12 @@
             ui.start('#firebaseui-auth-container', uiConfig);
             var user = firebase.auth().currentUser;
             var name, email, photoUrl, uid, emailVerified;
+
+            firebase.auth().signOut().then(function () {
+                console.log('Signed Out');
+            }, function (error) {
+                console.error('Sign Out Error', error);
+            });
         </script>
     </div>
 </body>
