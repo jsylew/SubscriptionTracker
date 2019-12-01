@@ -1,3 +1,7 @@
+let userID = localStorage.getItem('userID')
+let userName = localStorage.getItem('userName');
+let userEmail = localStorage.getItem('userEmail');
+
 function getInfo(col, doc) {
     var docRef = db.collection(col).doc(doc);
     let g = docRef.get().then(function (doc) {
