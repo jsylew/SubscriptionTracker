@@ -170,7 +170,7 @@ button.login {
 }
 
 .section {
-    padding: 1em 1.7em;
+    padding: 0.25em 1.7em;
 }
 
 h4.sectionTitle {
@@ -237,6 +237,13 @@ p.starredTrackers {
 h1.currentTime {
     color: #35B3AB;
     font-size: 4em;;
+}
+
+.greetings {
+    color: #35B3AB;
+    font-size: 2em;
+    padding-bottom: 0.25em;
+
 }
 
 [tabindex="-1"]:focus {
@@ -10212,13 +10219,5 @@ body {
 }
 }
 
-.greeting {
-    color: #35B3AB;
-    position: fixed;
-    left: 3.5%;
-    top: 16%;
-    font-size: x-large;
 
-
-}
 /*# sourceMappingURL=bootstrap.css.map */
