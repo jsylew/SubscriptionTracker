@@ -1,3 +1,7 @@
+let userID = localStorage.getItem('userID')
+let userName = localStorage.getItem('userName');
+let userEmail = localStorage.getItem('userEmail');
+
 function getInfo(col, doc) {
     var docRef = db.collection(col).doc(doc);
     let g = docRef.get().then(function (doc) {
@@ -100,7 +104,7 @@ function countTime(btnID) {
 // Add time to db
 function updateUserTime(value, btnID) {
     let date = new Date().toDateString() + " " + new Date().toTimeString();
-    let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+    let ref = db.doc('users/${userID}').get().then(function (doc) {
         let user = doc.data();
         Promise.all([user, value]).then(function () {
             db.collection("users").doc(`${userID}`).collection(btnID).doc(date).set({
@@ -134,8 +138,8 @@ function displayTime() {
 
 // Get user ID and name from local storage and display
 function displayUserInfo() {
-    let userID = localStorage.getItem('userID')
+    let userID = localStorage.getItem('userID');
     let userName = localStorage.getItem('userName');
     let userEmail = localStorage.getItem('userEmail');
-    document.getElementById("userInfoID").innerHTML = `Hello, ${userName}`
+    document.getElementById("userInfoID").innerHTML = `Hello, ${userName}`;
 }
