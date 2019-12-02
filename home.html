@@ -60,13 +60,13 @@
     <div class="section">
         <h4 class="sectionTitle">SUBSCRIPTIONS</h4>
         <div class="sub-col-1">
-            <a href="sub-netflix.html"><img class="sub-icons" id="netflix" src="images/netflix.png"></a>
+            <img class="sub-icons" id="netflix" src="images/netflix.png" onclick=(goToSub(this.id))>
         </div>
         <div class="sub-col-2">
-            <img class="sub-icons" id="spotify" src="images/spotify.png">
+            <img class="sub-icons" id="spotify" src="images/spotify.png" onclick=(goToSub(this.id))>
         </div>
         <div class="sub-col-3">
-            <img class="sub-icons" id="prime" src="images/prime.png">
+            <img class="sub-icons" id="amazon" src="images/prime.png" onclick=(goToSub(this.id))>
         </div>
     </div>
 
@@ -84,6 +84,7 @@
     <script>
 
         displayUserInfo();
+        
 
     </script>
 
