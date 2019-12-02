@@ -251,9 +251,50 @@ h1.currentTime {
 }
 
 .total {
-    padding: 0.75em 0;
+    /* padding: 0.75em 0; */
     font-weight: 900;
     color: #35B3AB;
+}
+
+.btn-green {
+    background-color: #35B3AB;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+}
+
+.space {
+    padding: 1.5em 0em;
+}
+
+.btn-set {
+    font-size: 1em;
+}
+
+p.limit {
+    padding-top: 1em;
+}
+
+.limit {
+    display: none;
+}
+
+input[type=number] {
+    border: 1px solid #35B3AB;
+    border-radius: 0.25em;
+    padding: 0em 0.5em;
+    width: 15%;
+}
+
+input[type=submit] {
+    background-color: #35B3AB;
+    border: none;
+    color: white;
+    font-size: 1em;
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
 }
 
 [tabindex="-1"]:focus {

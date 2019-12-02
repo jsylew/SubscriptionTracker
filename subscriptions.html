@@ -19,7 +19,16 @@
         </div>
     </div>
     <div class="section">
-        <h4 id = "sectionTitle" class="sectionTitle">Usage Records</h4>
+        <h4 id="sectionTitle" class="sectionTitle">Usage Records</h4>
+        <div id="sectionID" class="table-containter">
+            <button id="change-limit" type="button" class="btn-green" onclick="showInput()">Change Limit</button>
+            <p class="limit"><strong>New limit in hours:</strong></p>
+            <input id="new-limit" class="limit" type="number">
+            <button type="button" class="limit btn-green btn-set" onclick="setLimit()">SET</button>
+            <button type="button" class="limit btn-green btn-set" onclick="hideInput()">CANCEL</button>
+            <div id="total-left" class="col-1 space"></div>
+            <div id="total-right" class="col-2 space"></div>
+        </div>
         <div id="sectionID" class="table-containter">
             <div id="date" class="col-1"></div>
             <div id="usage" class="col-2"></div>
@@ -34,6 +43,8 @@
     <script>
 
         let tempuserID = localStorage.getItem('userID');
+        showLimit(tempuserID);
+        percentUsed(tempuserID);
         totalUsage(tempuserID);
         getLogs(tempuserID);
 

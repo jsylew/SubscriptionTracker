@@ -92,11 +92,7 @@ function countTime(btnID) {
         else {
             document.getElementById("time").innerHTML = "";
         }
-        // Get end time
         endTime = new Date().getTime()
-        // Get session time and send to db
-        // let sessionTime = Math.floor((endTime - startTime) / 1000);
-        // let strSessionTime = sessionTime.toString();
         let sessionTime = endTime - startTime
         updateUserTime(sessionTime, btnID);
     }
@@ -119,20 +115,8 @@ function updateUserTime(value, btnID) {
 function displayTime() {
     endTime = new Date().getTime();
     newTime = endTime - startTime;
-    let hours = Math.floor((newTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((newTime % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((newTime % (1000 * 60)) / 1000);
-
-    if (hours < 10) {
-        hours = "0" + hours;
-    }
-    if (minutes < 10) {
-        minutes = "0" + minutes;
-    }
-    if (seconds < 10) {
-        seconds = "0" + seconds;
-    }
-    display.innerHTML = hours + ":" + minutes + ":" + seconds;
+    usageTime = convertTime(newTime);
+    display.innerHTML = usageTime;
 }
 
 // Get user ID and name from local storage and display
@@ -162,7 +146,10 @@ function getLogs(userID) {
     let subID = getSubID();
     db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
         snapshot.forEach(function (doc) {
-            displayUsage(doc.id, doc.data());
+            let key = Object.keys(doc.data());
+            if (key != "limit") {
+                displayUsage(doc.id, doc.data());
+            }
         });
     })
         .catch(function (error) {
@@ -190,25 +177,86 @@ function convertTime(time) {
     return usageTime
 }
 
-// Calc and display total usage
+
+// Show limit
+function showLimit(userID) {
+    let subID = getSubID();
+    let limit = 0;
+    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
+        snapshot.forEach(function (doc) {
+            let key = Object.keys(doc.data());
+            if (key == "limit") {
+                limit += doc.data()["limit"];
+            }
+        });
+        let newLimit = convertTime(limit);
+        let usageLimit = document.createElement("h4");
+        usageLimit.innerHTML = "USAGE LIMIT:";
+        usageLimit.className = "total";
+        let userLimit = document.createElement("h4");
+        userLimit.innerHTML = newLimit;
+        userLimit.className = "total";
+        document.getElementById("total-left").appendChild(usageLimit);
+        document.getElementById("total-right").appendChild(userLimit);
+    })
+}
+
+// Calc and display % used
+function percentUsed(userID) {
+    let subID = getSubID();
+    let totalTime = 0;
+    let percent;
+    let limit = 0;
+    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
+        snapshot.forEach(function (doc) {
+            let key = Object.keys(doc.data());
+            if (key == "limit") {
+                limit += doc.data()["limit"];
+            }
+            if (key != "limit") {
+                totalTime += doc.data()["time"];
+            }
+        });
+        console.log(limit)
+        console.log(totalTime);
+        let newPercent = (totalTime / limit * 100).toFixed(2) + "%";
+        let percentLabel = document.createElement("h4");
+        percentLabel.innerHTML = "USED:";
+        percentLabel.className = "total";
+        let percentUsed = document.createElement("h4");
+        percentUsed.innerHTML = newPercent;
+        percentUsed.className = "total";
+        document.getElementById("total-left").appendChild(percentLabel);
+        document.getElementById("total-right").appendChild(percentUsed);
+    });
+}
+
+// Calc total usage
 function totalUsage(userID) {
     let totalTime = 0;
     let subID = getSubID();
     db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
         snapshot.forEach(function (doc) {
-            totalTime += doc.data()["time"];
+            let key = Object.keys(doc.data());
+            if (key != "limit") {
+                totalTime += doc.data()["time"];
+            }
         });
-        let total = document.createElement("h4");
-        total.innerHTML = "TOTAL USAGE:";
-        total.className = "total";
-        let usageTime = convertTime(totalTime);
-        console.log(usageTime);
-        let time = document.createElement("h4");
-        time.innerHTML = usageTime;
-        time.className = "total";
-        document.getElementById("date").appendChild(total);
-        document.getElementById("usage").appendChild(time);
-    }) 
+        showTotal(totalTime);
+    })
+}
+
+// Display total usage
+function showTotal(totalTime) {
+    let total = document.createElement("h4");
+    total.innerHTML = "TOTAL USAGE:";
+    total.className = "total";
+    let usageTime = convertTime(totalTime);
+    let time = document.createElement("h4");
+    time.innerHTML = usageTime;
+    time.className = "total";
+    document.getElementById("total-left").appendChild(total);
+    document.getElementById("total-right").appendChild(time);
 }
 
 // Display usage logs
@@ -223,4 +271,39 @@ function displayUsage(id, data) {
     usageLog.innerHTML = time;
     document.getElementById("date").appendChild(dayLog);
     document.getElementById("usage").appendChild(usageLog);
+}
+
+// Set usage limt
+function setLimit() {
+    let subID = getSubID();
+    let value = document.getElementById("new-limit").value;
+    let ref = db.doc('users/${userID}').get().then(function (doc) {
+        let user = doc.data();
+        Promise.all([user, value]).then(function () {
+            db.collection("users").doc(`${userID}`).collection(subID).doc("limit").set({
+                'limit': value * 3600000
+            }, { merge: true })
+        })
+    })
+    document.getElementById("new-limit").value = "";
+    hideInput();
+}
+
+// Show set limit input
+function showInput() {
+    document.getElementById("change-limit").style.display = "none";
+    let items = document.getElementsByClassName("limit");
+    for (let i = 0; i < Object.keys(items).length; i++) {
+        items[i].style.display = "initial";
+    }
+}
+
+
+// Hide set limit input
+function hideInput() {
+    document.getElementById("change-limit").style.display = "initial";
+    let items = document.getElementsByClassName("limit");
+    for (let i = 0; i < Object.keys(items).length; i++) {
+        items[i].style.display = "none";
+    }
 }
