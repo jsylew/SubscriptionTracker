@@ -26,8 +26,14 @@
             <input id="new-limit" class="limit" type="number">
             <button type="button" class="limit btn-green btn-set" onclick="setLimit()">SET</button>
             <button type="button" class="limit btn-green btn-set" onclick="hideInput()">CANCEL</button>
-            <div id="total-left" class="col-1 space"></div>
-            <div id="total-right" class="col-2 space"></div>
+            <div id="total-left" class="col-1 space">
+                <h4 class="total">USAGE LIMIT:</h4>
+                <h4 class="total">USED:</h4>
+            </div>
+            <div id="total-right" class="col-2 space">
+                <h4 id="usage-limit" class="total"></h4>
+                <h4 id="used" class="total"></h4>
+            </div>
         </div>
         <div id="sectionID" class="table-containter">
             <div id="date" class="col-1"></div>

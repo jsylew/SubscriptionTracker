@@ -179,27 +179,36 @@ function convertTime(time) {
 
 
 // Show limit
+// function showLimit(userID) {
+//     let subID = getSubID();
+//     let limit = 0;
+//     db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
+//         snapshot.forEach(function (doc) {
+//             let key = Object.keys(doc.data());
+//             if (key == "limit") {
+//                 limit += doc.data()["limit"];
+//             }
+//         });
+//         let userLimit = convertTime(limit);
+//         document.getElementById("usage-limit").innerHTML = userLimit;
+//     })
+// }
+
 function showLimit(userID) {
     let subID = getSubID();
     let limit = 0;
-    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
+    db.collection("users").doc(`${userID}`).collection(subID).onSnapshot((function (snapshot) {
         snapshot.forEach(function (doc) {
             let key = Object.keys(doc.data());
             if (key == "limit") {
-                limit += doc.data()["limit"];
+                limit = doc.data()["limit"];
             }
         });
-        let newLimit = convertTime(limit);
-        let usageLimit = document.createElement("h4");
-        usageLimit.innerHTML = "USAGE LIMIT:";
-        usageLimit.className = "total";
-        let userLimit = document.createElement("h4");
-        userLimit.innerHTML = newLimit;
-        userLimit.className = "total";
-        document.getElementById("total-left").appendChild(usageLimit);
-        document.getElementById("total-right").appendChild(userLimit);
-    })
+        userLimit = convertTime(limit);
+        document.getElementById("usage-limit").innerHTML = userLimit;
+    }))
 }
+
 
 // Calc and display % used
 function percentUsed(userID) {
@@ -207,7 +216,7 @@ function percentUsed(userID) {
     let totalTime = 0;
     let percent;
     let limit = 0;
-    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
+    db.collection("users").doc(`${userID}`).collection(subID).onSnapshot((function (snapshot) {
         snapshot.forEach(function (doc) {
             let key = Object.keys(doc.data());
             if (key == "limit") {
@@ -217,18 +226,9 @@ function percentUsed(userID) {
                 totalTime += doc.data()["time"];
             }
         });
-        console.log(limit)
-        console.log(totalTime);
         let newPercent = (totalTime / limit * 100).toFixed(2) + "%";
-        let percentLabel = document.createElement("h4");
-        percentLabel.innerHTML = "USED:";
-        percentLabel.className = "total";
-        let percentUsed = document.createElement("h4");
-        percentUsed.innerHTML = newPercent;
-        percentUsed.className = "total";
-        document.getElementById("total-left").appendChild(percentLabel);
-        document.getElementById("total-right").appendChild(percentUsed);
-    });
+        document.getElementById("used").innerHTML = newPercent;
+    }));
 }
 
 // Calc total usage
