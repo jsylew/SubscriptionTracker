@@ -11,6 +11,7 @@ function displayUserInfo() {
     document.getElementById("userInfoID").innerHTML = `Hello, ${userName}`;
 }
 
+// Make name title case
 function titleCase(name) {
     let str = name.toLowerCase().split(' ');
     for (let i = 0; i < str.length; i++) {
@@ -25,11 +26,12 @@ function favSub(userID) {
     let ref = db.doc(`users/${userID}`).get().then(function (doc) {
         let user = doc.data();
         let userFavList = user.favourites;
+        // If userFavList array doesn't exist, create empty one
         if (!userFavList) {
             userFavList = [];
         }
+        // Checks if sub is in userFavList, unfav it
         if (userFavList.includes(subID)) {
-            // document.getElementById("star").src="images/unstar.png";
             for (let i = 0; i < userFavList.length; i++) {
                 if (userFavList[i] === subID) {
                     userFavList.splice(i, 1);
@@ -41,10 +43,12 @@ function favSub(userID) {
                 }, { merge: true })
             })
         }
+        // If userFavList already have 3 subs, alert
         else if (userFavList.length === 3) {
             console.log(1);
             alert("You can only star 3 trackers, please unstar one first to continue.")
         }
+        // Push sub to userFavList array
         else {
             document.getElementById("star").src = "images/star.png";
             Promise.all([user]).then(function () {
@@ -58,23 +62,28 @@ function favSub(userID) {
     })
 }
 
+// Control star/unstar
 function showStar() {
     let subID = getSubID();
     let ref = db.doc(`users/${userID}`).onSnapshot((function (doc) {
         let user = doc.data();
         let userFavList = user.favourites;
+        // if userFavList doesn't exist, create empty one
         if (!userFavList) {
             userFavList = [];
         }
+        // if sub is in userFavList, display star
         if (userFavList.includes(subID)) {
             document.getElementById("star").src="images/star.png";
         }
+        //if sub isn't in userFavList, display unstar
         else {
             document.getElementById("star").src="images/unstar.png";
         }
     }))
 }
 
+// Get favourites from db and pass to create starred trackers
 function setStarredTrackers(userID) {
     let ref = db.doc(`users/${userID}`).get().then(function (doc) {
         let user = doc.data();
@@ -86,6 +95,7 @@ function setStarredTrackers(userID) {
     })
 }
 
+// Create starred trackers on home page
 function makeStarredTracker(fav) {
     for (let i = 0; i < Math.min(3, fav.length); i++) {
         let favName = fav[i];
@@ -93,14 +103,12 @@ function makeStarredTracker(fav) {
         favButton.innerHTML = titleCase(favName);
         favButton.onclick = function () {
             localStorage.setItem('subName', favName);
-            location.href = "sub.html";
         }
         document.getElementById(`btn${i + 1}`).id = favName;
     }
 }
 
-
-// 
+// Get subscription list from db
 function setSubscriptions(userID) {
     let ref = db.doc(`users/${userID}`).onSnapshot(function (doc) {
         let user = doc.data();
@@ -179,20 +187,8 @@ function updateUserTime(value, btnID) {
 function displayTime() {
     endTime = new Date().getTime();
     newTime = endTime - startTime;
-    let hours = Math.floor((newTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((newTime % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((newTime % (1000 * 60)) / 1000);
-
-    if (hours < 10) {
-        hours = "0" + hours;
-    }
-    if (minutes < 10) {
-        minutes = "0" + minutes;
-    }
-    if (seconds < 10) {
-        seconds = "0" + seconds;
-    }
-    display.innerHTML = hours + ":" + minutes + ":" + seconds;
+    usageTime = convertTime(newTime);
+    display.innerHTML = usageTime;
 }
 
 // Go to sub page of the one clicked
@@ -207,7 +203,6 @@ function getSubID() {
     return subID
 }
 
-
 // Get usage logs from db
 function getLogs(userID) {
     let subID = getSubID();
@@ -220,7 +215,6 @@ function getLogs(userID) {
             console.log("Error getting documents: ", error);
         });
 }
-
 
 // Convert usage log to hours, min, sec
 function convertTime(time) {
@@ -366,23 +360,6 @@ function getLogs(userID) {
         });
 }
 
-function setTitle(subTitle) {
-    let titleStr = document.createElement('p');
-    titleStr.innerHTML = `${titleCase(subTitle)} Usage Records`;
-    document.getElementById('sectionTitle').appendChild(titleStr);
-}
-
-function setSubImage(subTitle) {
-    let appImage = document.createElement('img');
-    appImage.src = `images/${subTitle}.png`;
-    appImage.id = 'appImage';
-    document.getElementById('imageWrapper').appendChild(appImage);
-}
-
-function timeHistory() {
-    myHistory += document.write(mySub + " " + myDate + " " + myTime + " seconds");
-}
-
 // Add sub
 function addSub(className) {
     let subID = document.getElementById("newSubName").value;
@@ -405,8 +382,7 @@ function addSub(className) {
     })
     document.getElementById("newSubName").value = "";
     document.getElementById("new-limit").value = "";
-    setSubscriptions(userID)
-    // hideInput(className);
+    setSubscriptions(userID);
 }
 
 // Show input
