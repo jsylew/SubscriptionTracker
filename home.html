@@ -18,8 +18,17 @@
             <h1 id="header">TRACKER APP</h1>
         </div>
     </div>
+    <div id="firebaseui-auth-container"></div>
+
+
+    <!-- USER INFO -->
+<!--     <div class="greeting">
+        <p id="userInfoID">USER INFO</p>
+    </div>
+ -->
 
     <!-- SUBSCRIPTIONS -->
+
     <div class="section">
         
         <!-- GREETINGS-->
@@ -30,28 +39,30 @@
             <h1 id="time" class="currentTime"></h1>
         </div>
 
+        <!-- FAVORITES -->
+
         <div id='fav1' class="tracker">
             <div class="col-1">
-                <p id="starred-1" class="starred-trackers">Netflix</p>
+                <p id="starred-1" class="starred-trackers"></p>
             </div>
             <div class="col-2">
-                <img id="netflix" class="time-btn" width="25px" src="images/record.png" onclick=(countTime(this.id))>
+                <img class="time-btn" id="btn1" src="images/record.png" onclick=(countTime(this.id))>
             </div>
         </div>
         <div id='fav2' class="tracker">
             <div class="col-1">
-                <p id="starred-2" class="starred-trackers">Spotify</p>
+                <p id="starred-2" class="starred-trackers"></p>
             </div>
             <div class="col-2">
-                <img id="spotify" class="time-btn" src="images/record.png" onclick=(countTime(this.id))>
+                <img class="time-btn" id="btn2" src="images/record.png" onclick=(countTime(this.id))>
             </div>
         </div>
         <div id='fav3' class="tracker">
             <div class="col-1">
-                <p id="starred-3" class="starred-trackers">Amazon Prime</p>
+                <p id="starred-3" class="starred-trackers"></p>
             </div>
             <div class="col-2">
-                <img id="amazon" class="time-btn" src="images/record.png" onclick=(countTime(this.id))>
+                <img class="time-btn" id="btn3" src="images/record.png" onclick=(countTime(this.id))>
             </div>
         </div>
     </div>
@@ -60,6 +71,29 @@
     <div class="section">
         <h4 class="sectionTitle">SUBSCRIPTIONS</h4>
         <div class="sub-col-1">
+
+            <img id="sub-1" class="sub-icons">
+            <img id="sub-4" class="sub-icons">
+        </div>
+        <div class="sub-col-2">
+            <img id="sub-2" class="sub-icons">
+            <img id="sub-5" class="sub-icons">
+        </div>
+        <div class="sub-col-3">
+            <img id="sub-3" class="sub-icons">
+            <img id="sub-6" class="sub-icons">
+        </div>
+    </div>
+
+    <div class="section">
+        <div id="sectionID" class="table-containter">
+            <button id="add-sub" type="button" class="btn-green" onclick="showInput('add')">Add sub</button>
+            <p class="add"><strong>New sub:</strong></p>
+            <input id="newSubName" class="add" type="string">
+            <input id="new-limit" class="add" type="number">
+            <button type="button" class="add btn-green btn-set" onclick="addSub('add')">SET</button>
+            <button type="button" class="add btn-green btn-set" onclick="hideInput('add')">CANCEL</button>
+
             <img class="sub-icons" id="netflix" src="images/netflix.png" onclick=(goToSub(this.id))>
         </div>
         <div class="sub-col-2">
@@ -67,24 +101,33 @@
         </div>
         <div class="sub-col-3">
             <img class="sub-icons" id="amazon" src="images/prime.png" onclick=(goToSub(this.id))>
+
         </div>
     </div>
 
     <!-- SIGNOUT -->
     <!-- <div class="signout">
         <a href="Login.html"><img id="signoutID" src="images/signout.png"></a>
-    </div> -->
+
 
     <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-firestore.js"></script>
     <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <script src="js/firebase_setup.js"></script>
     <script src="js/app.js"></script>
     <script src="js/firebase_setup.js"></script>
 
     <script>
 
+
+        // Invocation
+        displayUserName();
+        displayUserEmail();
         displayUserInfo();
-        
+        setStarredTrackers(userID);
+        setSubscriptions(userID);
+
+        displayUserInfo();
 
     </script>
 

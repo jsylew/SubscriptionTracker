@@ -7,7 +7,16 @@
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Tracker App</title>
-
+    <style>
+        #appImage {
+            width: 100px;
+            height: 100px;
+        }
+        #imageWrapper {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,40 +28,30 @@
             <h1 id="header">TRACKER APP</h1>
         </div>
     </div>
-
-    <div id='imageWrapper'></div>
-    <div id='subTitle'></div>
-    <div id='usedWrapper'></div>
-    <div id='percentWrapper'></div>
-    <div id='limitWrapper'></div>
-    <div id='limitValueWrapper'></div>
-    <div id='usageGraphWrapper'></div>
-    <div id='graphWrapper'></div>
+    <div class="sub-icons" id="imageWrapper"></div>
+    <div class="section">
+        <h4 id="sectionTitle" class="sectionTitle"></h4>
+    </div>
+    <div class="section" id="subList"></div>
+    <div class="section" id="graph"></div>
 
     <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-firestore.js"></script>
+    <script src="js/firebase_setup.js"></script>
     <script src="js/app.js"></script>
-    
+
 
     <script>
-        function setTitle(subTitle) {
-            let titleStr = document.createElement('p');
-            titleStr.innerHTML = titleCase(subTitle);
-            document.getElementById('subTitle').appendChild(titleStr);
-        }
+        let myTime = localStorage.getItem('time');
+        let myDate = localStorage.getItem('date');
+        let myHistory = ""
+        let subName = localStorage.getItem('subName');
 
-        function setSubImage(subTitle) {
-            let appImage = document.createElement('img');
-            appImage.src = imgsrcs[subTitle];
-            document.getElementById('imageWrapper').appendChild(appImage);
-        }
-
-
-
-
-        let subTitle = localStorage.getItem('subName');
-        setTitle(subTitle);
+        setSubImage(subName);
+        setTitle(subName);
+        totalUsage(userID);
+        getLogs(userID);
     </script>
 </body>
 
