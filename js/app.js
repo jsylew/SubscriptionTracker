@@ -19,6 +19,7 @@ function titleCase(name) {
     return str.join(' ');
 }
 
+// Star and unstar subs and add/remove from list in db
 function favSub(userID) {
     let subID = getSubID();
     let ref = db.doc(`users/${userID}`).get().then(function (doc) {
@@ -61,8 +62,8 @@ function setStarredTrackers(userID) {
     let ref = db.doc(`users/${userID}`).get().then(function (doc) {
         let user = doc.data();
         Promise.all([user]).then(function () {
-            if (user.favorites) {
-                makeStarredTracker(user.favorites);
+            if (user.favourites) {
+                makeStarredTracker(user.favourites);
             }
         })
     })
