@@ -40,6 +40,10 @@ function favSub(userID) {
                 }, { merge: true })
             })
         }
+        else if (userFavList.length === 3) {
+            console.log(1);
+            alert("You can only star 3 trackers, please unstar one first to continue.")
+        }
         else {
             document.getElementById("star").src="images/star.png";
             Promise.all([user]).then(function () {
