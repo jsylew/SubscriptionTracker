@@ -21,14 +21,15 @@
     <div class="section">
         <h4 id="sectionTitle" class="sectionTitle">Usage Records</h4>
         <div id="sectionID" class="table-containter">
-            <button id="change-limit" type="button" class="btn-green" onclick="showInput()">Change Limit</button>
+            <button id="change-limit" type="button" class="change-limit btn-green" onclick="showInput('change-limit','limit')">Change Limit</button><br>
             <p class="limit"><strong>New limit in hours:</strong></p>
             <input id="new-limit" class="limit" type="number">
             <button type="button" class="limit btn-green btn-set" onclick="setLimit()">SET</button>
-            <button type="button" class="limit btn-green btn-set" onclick="hideInput()">CANCEL</button>
+            <button type="button" class="limit btn-green btn-set" onclick="hideInput('limit', 'change-limit')">CANCEL</button>
             <div id="total-left" class="col-1 space">
                 <h4 class="total">USAGE LIMIT:</h4>
                 <h4 class="total">USED:</h4>
+                <h4 class="total">TOTAL USAGE:</h4>
             </div>
             <div id="total-right" class="col-2 space">
                 <h4 id="usage-limit" class="total"></h4>
