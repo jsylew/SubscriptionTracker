@@ -20,19 +20,27 @@
     </div>
     <div id="firebaseui-auth-container"></div>
 
+
     <!-- USER INFO -->
-    <div class="greeting">
+<!--     <div class="greeting">
         <p id="userInfoID">USER INFO</p>
     </div>
+ -->
+
+    <!-- SUBSCRIPTIONS -->
 
     <div class="section">
-        <div id='userInfoWrapper'></div>
+        
+        <!-- GREETINGS-->
+        <h3 class="greetings" id="userInfoID">USER INFO</h3>
+
         <h4 class="sectionTitle">STARRED TRACKERS</h4>
         <div class="displayTime">
             <h1 id="time" class="currentTime"></h1>
         </div>
 
         <!-- FAVORITES -->
+
         <div id='fav1' class="tracker">
             <div class="col-1">
                 <p id="starred-1" class="starred-trackers"></p>
@@ -63,6 +71,7 @@
     <div class="section">
         <h4 class="sectionTitle">SUBSCRIPTIONS</h4>
         <div class="sub-col-1">
+
             <img id="sub-1" class="sub-icons">
             <img id="sub-4" class="sub-icons">
         </div>
@@ -84,21 +93,32 @@
             <input id="new-limit" class="add" type="number">
             <button type="button" class="add btn-green btn-set" onclick="addSub('add')">SET</button>
             <button type="button" class="add btn-green btn-set" onclick="hideInput('add')">CANCEL</button>
+
+            <img class="sub-icons" id="netflix" src="images/netflix.png" onclick=(goToSub(this.id))>
+        </div>
+        <div class="sub-col-2">
+            <img class="sub-icons" id="spotify" src="images/spotify.png" onclick=(goToSub(this.id))>
+        </div>
+        <div class="sub-col-3">
+            <img class="sub-icons" id="amazon" src="images/prime.png" onclick=(goToSub(this.id))>
+
         </div>
     </div>
 
     <!-- SIGNOUT -->
-    <div class="signout">
+    <!-- <div class="signout">
         <a href="Login.html"><img id="signoutID" src="images/signout.png"></a>
-    </div>
+
 
     <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-firestore.js"></script>
     <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
     <script src="js/firebase_setup.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/firebase_setup.js"></script>
 
     <script>
+
 
         // Invocation
         displayUserName();
@@ -106,6 +126,8 @@
         displayUserInfo();
         setStarredTrackers(userID);
         setSubscriptions(userID);
+
+        displayUserInfo();
 
     </script>
 
