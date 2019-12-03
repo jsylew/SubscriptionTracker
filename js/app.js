@@ -29,7 +29,7 @@ function favSub(userID) {
             userFavList = [];
         }
         if (userFavList.includes(subID)) {
-            document.getElementById("star").src="images/unstar.png";
+            // document.getElementById("star").src="images/unstar.png";
             for (let i = 0; i < userFavList.length; i++) {
                 if (userFavList[i] === subID) {
                     userFavList.splice(i, 1);
@@ -37,7 +37,7 @@ function favSub(userID) {
             }
             Promise.all([user]).then(function () {
                 db.collection("users").doc(`${userID}`).set({
-                    'favourites': userFavList
+                    'favourites': userFavList,
                 }, { merge: true })
             })
         }
@@ -46,16 +46,33 @@ function favSub(userID) {
             alert("You can only star 3 trackers, please unstar one first to continue.")
         }
         else {
-            document.getElementById("star").src="images/star.png";
+            document.getElementById("star").src = "images/star.png";
             Promise.all([user]).then(function () {
                 userFavList.push(subID)
                 db.collection("users").doc(`${userID}`).set({
-                    'favourites': userFavList
+                    'favourites': userFavList,
                 }, { merge: true })
             })
         }
-        
+
     })
+}
+
+function showStar() {
+    let subID = getSubID();
+    let ref = db.doc(`users/${userID}`).onSnapshot((function (doc) {
+        let user = doc.data();
+        let userFavList = user.favourites;
+        if (!userFavList) {
+            userFavList = [];
+        }
+        if (userFavList.includes(subID)) {
+            document.getElementById("star").src="images/star.png";
+        }
+        else {
+            document.getElementById("star").src="images/unstar.png";
+        }
+    }))
 }
 
 function setStarredTrackers(userID) {
