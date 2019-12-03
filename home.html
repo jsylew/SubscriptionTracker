@@ -86,13 +86,14 @@
 
     <div class="section">
         <div id="sectionID" class="table-containter">
-            <button id="add-sub" type="button" class="btn-green" onclick="showInput('add-sub', 'add')">Add sub</button><br>
+            <button id="add-sub" type="button" class="instructions btn-green" onclick="showHide('add', 'instructions')">Add sub</button><br>
+            <p class="instructions" id="instruction"></p>
             <label class="add" for="newSubName">Subscription Name</label>
             <input id="newSubName" class="add" type="string"><br>
             <label class="add" for="new-limit">Set Limit in Hours</label>
             <input id="new-limit" class="add" type="number"><br>
             <button type="button" class="add btn-green btn-set" onclick="addSub('add')">ADD</button>
-            <button type="button" class="add btn-green btn-set" onclick="hideInput('add', 'add-sub')">CANCEL</button>
+            <button type="button" class="add btn-green btn-set" onclick="showHide('instructions', 'add')">CANCEL</button>
     
         </div>
 
@@ -110,17 +111,10 @@
     <script src="js/app.js"></script>
 
     <script>
-
-
-        // Invocation
-        // displayUserName();
-        // displayUserEmail();
         displayUserInfo();
         setStarredTrackers(userID);
         setSubscriptions(userID);
-
-        // displayUserInfo();
-
+        instruction()
     </script>
 
 </body>

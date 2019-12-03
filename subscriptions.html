@@ -27,12 +27,12 @@
                 <img id="star" src="images/unstar.png" onclick="favSub(userID)">
             </div>
             <button id="change-limit" type="button" class="change-limit btn-green"
-                onclick="showInput('change-limit','limit')">Change Limit</button><br>
-            <p class="limit"><strong>New limit in hours:</strong></p>
+                onclick="showHide('limit', 'change-limit')">Change Limit</button><br>
+            <p id="limit-instruction" class="limit">New limit in hours:</p>
             <input id="new-limit" class="limit" type="number">
             <button type="button" class="limit btn-green btn-set" onclick="setLimit()">SET</button>
             <button type="button" class="limit btn-green btn-set"
-                onclick="hideInput('limit', 'change-limit')">CANCEL</button>
+                onclick="showHide('change-limit', 'limit')">CANCEL</button>
             <div id="total-left" class="col-1 space">
                 <h4 class="total">USAGE LIMIT:</h4>
                 <h4 class="total">USED:</h4>

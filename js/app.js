@@ -74,11 +74,11 @@ function showStar() {
         }
         // if sub is in userFavList, display star
         if (userFavList.includes(subID)) {
-            document.getElementById("star").src="images/star.png";
+            document.getElementById("star").src = "images/star.png";
         }
         //if sub isn't in userFavList, display unstar
         else {
-            document.getElementById("star").src="images/unstar.png";
+            document.getElementById("star").src = "images/unstar.png";
         }
     }))
 }
@@ -341,7 +341,7 @@ function setLimit() {
         })
     })
     document.getElementById("new-limit").value = "";
-    hideInput('limit', 'change-limit');
+    showHide('change-limit', 'limit');
 }
 
 // Get usage logs from db
@@ -379,26 +379,38 @@ function addSub(className) {
                 'subscriptions': userSubList
             }, { merge: true })
         })
+        document.getElementById("instruction").style.display="none";
     })
     document.getElementById("newSubName").value = "";
     document.getElementById("new-limit").value = "";
     setSubscriptions(userID);
+    showHide('instructions', 'add');
 }
 
 // Show input
-function showInput(hide, show) {
-    document.getElementById(hide).style.display = "none";
-    let items = document.getElementsByClassName(show);
-    for (let i = 0; i < Object.keys(items).length; i++) {
-        items[i].style.display = "initial";
+function showHide(show, hide) {
+    let showItems = document.getElementsByClassName(show);
+    for (let i = 0; i < Object.keys(showItems).length; i++) {
+        showItems[i].style.display = "initial";
+    }
+    let hideItems = document.getElementsByClassName(hide);
+    for (let i = 0; i < Object.keys(hideItems).length; i++) {
+        hideItems[i].style.display = "none";
     }
 }
 
-// Hide input
-function hideInput(hide, show) {
-    document.getElementById(show).style.display = "initial";
-    let items = document.getElementsByClassName(hide);
-    for (let i = 0; i < Object.keys(items).length; i++) {
-        items[i].style.display = "none";
-    }
+function instruction() {
+    let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+        let user = doc.data();
+        let userSubList = user.subscriptions;
+        if (!userSubList) {
+            let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+                let user = doc.data();
+                let userSubList = user.subscriptions;
+                if (!userSubList) {
+                    document.getElementById("instruction").innerHTML="Add a subscription to begin";
+                }
+            })
+        }
+    })
 }
