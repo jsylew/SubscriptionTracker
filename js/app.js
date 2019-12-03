@@ -261,20 +261,22 @@ function showLimit(userID) {
 function percentUsed(userID) {
     let subID = getSubID();
     let totalTime = 0;
-    let percent;
+    // let percent = 0;
     let limit = 0;
     db.collection("users").doc(`${userID}`).collection(subID).onSnapshot((function (snapshot) {
         snapshot.forEach(function (doc) {
             let key = Object.keys(doc.data());
             if (key == "limit") {
-                limit += doc.data()["limit"];
+                limit = doc.data()["limit"];
             }
             if (key != "limit") {
                 totalTime += doc.data()["time"];
             }
         });
+        console.log(limit, totalTime)
         let newPercent = (totalTime / limit * 100).toFixed(2) + "%";
         document.getElementById("used").innerHTML = newPercent;
+        totalTime = 0;
     }));
 }
 
@@ -345,7 +347,7 @@ function setLimit() {
         })
     })
     document.getElementById("new-limit").value = "";
-    hideInput();
+    hideInput('limit', 'change-limit');
 }
 
 // Get usage logs from db
