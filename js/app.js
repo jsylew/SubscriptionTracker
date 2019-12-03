@@ -77,14 +77,11 @@ function makeStarredTracker(fav) {
 }
 
 function setSubscriptions(userID) {
-    let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+    let ref = db.doc(`users/${userID}`).onSnapshot(function (doc) {
         let user = doc.data();
         Promise.all([user]).then(function () {
             if (user.subscriptions) {
                 makeSubscriptions(user.subscriptions);
-            } 
-            if (!user.subscriptions || user.subscriptions.length < 6) {
-                setAddButton();
             }
         })
     })
@@ -108,19 +105,14 @@ function setAddButton() {
     subButton.src = 'images/add.png'
     subButton.onclick = function () {
         let sub = prompt("Enter a sub");
-
-        if (sub == null || sub == "") {
-            txt = "User cancelled the prompt.";
-        } else {
-            sub = sub.toLowerCase();
-            addSub(sub);
+        if (sub) {
+            let subLimit = prompt("Enter a limit (in hours)");
+            if (subLimit) {
+                sub = sub.toLowerCase();
+                addSub(sub, subLimit);
+            }
         }
     }
-}
-
-function addSub(sub) {
-    // TODO
-    setSubscriptions(userID);
 }
 
 // Variables for time display and stopwatch
@@ -265,7 +257,7 @@ function totalUsage(userID) {
         time.className = "total";
         document.getElementById("date").appendChild(total);
         document.getElementById("usage").appendChild(time);
-    }) 
+    })
 }
 
 // Get usage logs from db
@@ -297,3 +289,47 @@ function setSubImage(subTitle) {
 function timeHistory() {
     myHistory += document.write(mySub + " " + myDate + " " + myTime + " seconds");
 }
+
+// Add sub
+function addSub(className) {
+    let subID = document.getElementById("newSubName").value;
+        console.log(subID);
+    let value = document.getElementById("new-limit").value;
+        console.log(value);
+    let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+        let user = doc.data();
+        let userSubList = user.subscriptions;
+        Promise.all([user, value]).then(function () {
+            db.collection("users").doc(`${userID}`).collection(subID).doc("limit").set({
+                'limit': value * 3600000
+            }, { merge: true })
+            userSubList.push(subID)
+            db.collection("users").doc(`${userID}`).set({
+                'subscriptions': userSubList
+            }, { merge: true })
+        })
+    })
+    document.getElementById("newSubName").value = "";
+    document.getElementById("new-limit").value = "";
+    setSubscriptions(userID)
+    // hideInput(className);
+}
+
+// // Show add sub input
+// function showInput(className) {
+//     document.getElementById("add-sub").style.display = "none";
+//     let items = document.getElementsByClassName(className); // This should make this usable for your part too
+//     for (let i = 0; i < Object.keys(items).length; i++) {
+//         items[i].style.display = "initial";
+//     }
+// }
+
+
+// // Hide add sub input
+// function hideInput(className) {
+//     document.getElementById("add-sub").style.display = "initial";
+//     let items = document.getElementsByClassName(className); // Same as above
+//     for (let i = 0; i < Object.keys(items).length; i++) {
+//         items[i].style.display = "none";
+//     }
+// }
