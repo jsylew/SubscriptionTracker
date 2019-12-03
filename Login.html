@@ -40,7 +40,7 @@
                     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
                         var user = authResult.user;
                         if (authResult.additionalUserInfo.isNewUser) {
-                            db.collection("user_names").doc(user.uid).set({
+                            db.collection("users").doc(user.uid).set({
                                 firstName: user.displayName,
                                 email: user.email,
                             }, { merge: true })
@@ -52,7 +52,7 @@
                                     window.location.assign('home.html');
                                 })
                                 .catch(function (error) {
-                                    console.log("Error happend " + error);
+                                    console.log("Error happened " + error);
                                 });
                         }
                         else // an existing user
