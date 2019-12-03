@@ -281,6 +281,10 @@ p.limit {
     display: none;
 }
 
+#change-limit {
+    margin-left: 0.7em;
+}
+
 input[type=number] {
     border: 1px solid #35B3AB;
     border-radius: 0.25em;

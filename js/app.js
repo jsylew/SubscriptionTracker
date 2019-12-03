@@ -19,6 +19,40 @@ function titleCase(name) {
     return str.join(' ');
 }
 
+function favSub(userID) {
+    let subID = getSubID();
+    let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+        let user = doc.data();
+        let userFavList = user.favourites;
+        if (!userFavList) {
+            userFavList = [];
+        }
+        if (userFavList.includes(subID)) {
+            document.getElementById("star").src="images/unstar.png";
+            for (let i = 0; i < userFavList.length; i++) {
+                if (userFavList[i] === subID) {
+                    userFavList.splice(i, 1);
+                }
+            }
+            Promise.all([user]).then(function () {
+                db.collection("users").doc(`${userID}`).set({
+                    'favourites': userFavList
+                }, { merge: true })
+            })
+        }
+        else {
+            document.getElementById("star").src="images/star.png";
+            Promise.all([user]).then(function () {
+                userFavList.push(subID)
+                db.collection("users").doc(`${userID}`).set({
+                    'favourites': userFavList
+                }, { merge: true })
+            })
+        }
+        
+    })
+}
+
 function setStarredTrackers(userID) {
     let ref = db.doc(`users/${userID}`).get().then(function (doc) {
         let user = doc.data();
@@ -43,6 +77,8 @@ function makeStarredTracker(fav) {
     }
 }
 
+
+// 
 function setSubscriptions(userID) {
     let ref = db.doc(`users/${userID}`).onSnapshot(function (doc) {
         let user = doc.data();
@@ -54,6 +90,7 @@ function setSubscriptions(userID) {
     })
 }
 
+// Add sub image to screen with onclick to subpage
 function makeSubscriptions(sub) {
     for (let i = 0; i < Math.min(6, sub.length); i++) {
         let subName = sub[i];
@@ -62,24 +99,7 @@ function makeSubscriptions(sub) {
         subButton.innerHTML = titleCase(subName);
         subButton.onclick = function () {
             localStorage.setItem('subName', subName);
-            // location.href = "sub.html?";
-            console.log(subName);
             goToSub(subName);
-        }
-    }
-}
-
-function setAddButton() {
-    let subButton = document.getElementById('sub-6');
-    subButton.src = 'images/add.png'
-    subButton.onclick = function () {
-        let sub = prompt("Enter a sub");
-        if (sub) {
-            let subLimit = prompt("Enter a limit (in hours)");
-            if (subLimit) {
-                sub = sub.toLowerCase();
-                addSub(sub, subLimit);
-            }
         }
     }
 }
@@ -199,6 +219,7 @@ function convertTime(time) {
     return usageTime
 }
 
+// Display limit
 function showLimit(userID) {
     let subID = getSubID();
     let limit = 0;

@@ -19,13 +19,20 @@
         </div>
     </div>
     <div class="section">
-        <h4 id="sectionTitle" class="sectionTitle">Usage Records</h4>
         <div id="sectionID" class="table-containter">
-            <button id="change-limit" type="button" class="change-limit btn-green" onclick="showInput('change-limit','limit')">Change Limit</button><br>
+            <div class="col-1">
+                <h4 id="sectionTitle" class="sectionTitle">Usage Records</h4>
+            </div>
+            <div class="col-2">
+                <img id="star" src="images/unstar.png" onclick="favSub(userID)">
+            </div>
+            <button id="change-limit" type="button" class="change-limit btn-green"
+                onclick="showInput('change-limit','limit')">Change Limit</button><br>
             <p class="limit"><strong>New limit in hours:</strong></p>
             <input id="new-limit" class="limit" type="number">
             <button type="button" class="limit btn-green btn-set" onclick="setLimit()">SET</button>
-            <button type="button" class="limit btn-green btn-set" onclick="hideInput('limit', 'change-limit')">CANCEL</button>
+            <button type="button" class="limit btn-green btn-set"
+                onclick="hideInput('limit', 'change-limit')">CANCEL</button>
             <div id="total-left" class="col-1 space">
                 <h4 class="total">USAGE LIMIT:</h4>
                 <h4 class="total">USED:</h4>
@@ -54,6 +61,7 @@
         percentUsed(tempuserID);
         totalUsage(tempuserID);
         getLogs(tempuserID);
+
 
     </script>
 </body>
