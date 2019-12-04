@@ -7,7 +7,7 @@ Users can also set a limit for a subscription to track how much of their budget 
 <ul>
   <li>Timer - Allows users to log their usage</li>
   <li>Limit - Allows users to set a limit to view how much of their budget they've used</li>
-  <li>Usage logs - Shows the usage logs</li>
+  <li>Usage logs - Shows the user their historical usage</li>
 </ul>
 
 <h2>Tips</h2>
@@ -24,10 +24,10 @@ still work.
 <h2>Built With</h2>
 <ul>
   <li>
-    <a href="https://firebase.google.com/">Firebase</a> - Database and deployment
+    <a href="https://getbootstrap.com/">Bootstrap</a> - Styling and responsive design
   </li>
   <li>
-    <a href="https://getbootstrap.com/">Bootstrap</a> - Styling and responsive design
+    <a href="https://firebase.google.com/">Firebase</a> - Database and deployment
   </li>
 </ul>
 
