@@ -15,9 +15,15 @@ function displayUserInfo() {
 function titleCase(name) {
     let str = name.toLowerCase().split(' ');
     for (let i = 0; i < str.length; i++) {
-        str[i] = str[i][0].toUpperCase() + str[i].slice(1);
+        str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
     }
     return str.join(' ');
+}
+
+
+function splitSpace(name) {
+    name = name.split('%20');
+    return name.join(' ');
 }
 
 // Star and unstar subs and add/remove from list in db
@@ -199,6 +205,7 @@ function goToSub(subID) {
 // Get subID from URL
 function getSubID() {
     let subID = window.location.href.split('?')[1];
+    subID = splitSpace(subID)
     document.getElementById("sectionTitle").innerHTML = titleCase(subID) + " Usage Records";
     return subID
 }
