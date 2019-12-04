@@ -147,33 +147,39 @@ let run = false;
 
 // Record and stop
 function countTime(btnID) {
-    // If not recording, get start time and change display every sec
-    if (!run) {
-        startTime = new Date().getTime();
-        timeInterval = setInterval(displayTime, 1000);
-        run = true;
-        document.getElementById(btnID).src = "images/stop.png";
+    if (btnID == "btn1" || btnID == "btn2" || btnID == "btn3") {
+        alert("Star a subscription to track time")
     }
-    // If recording, stop, stop display update
     else {
-        run = false;
-        document.getElementById(btnID).src = "images/record.png";
-        clearInterval(timeInterval);
-        // Get confirmation if user wants to save time
-        if (confirm("Do you want to save this time?")) {
-            document.getElementById("time").innerHTML = "";
+        // If not recording, get start time and change display every sec
+        if (!run) {
+            startTime = new Date().getTime();
+            timeInterval = setInterval(displayTime, 1000);
+            run = true;
+            document.getElementById(btnID).src = "images/stop.png";
         }
+        // If recording, stop, stop display update
         else {
-            document.getElementById("time").innerHTML = "";
+            run = false;
+            document.getElementById(btnID).src = "images/record.png";
+            clearInterval(timeInterval);
+            // Get confirmation if user wants to save time
+            if (confirm("Do you want to save this time?")) {
+                document.getElementById("time").innerHTML = "";
+            }
+            else {
+                document.getElementById("time").innerHTML = "";
+            }
+            // Get end time
+            endTime = new Date().getTime()
+            // Get session time and send to db
+            // let sessionTime = Math.floor((endTime - startTime) / 1000);
+            // let strSessionTime = sessionTime.toString();
+            let sessionTime = endTime - startTime
+            updateUserTime(sessionTime, btnID);
         }
-        // Get end time
-        endTime = new Date().getTime()
-        // Get session time and send to db
-        // let sessionTime = Math.floor((endTime - startTime) / 1000);
-        // let strSessionTime = sessionTime.toString();
-        let sessionTime = endTime - startTime
-        updateUserTime(sessionTime, btnID);
     }
+
 }
 
 // Add time to db
