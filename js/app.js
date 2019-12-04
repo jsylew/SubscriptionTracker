@@ -255,7 +255,6 @@ function showLimit(userID) {
 function percentUsed(userID) {
     let subID = getSubID();
     let totalTime = 0;
-    // let percent = 0;
     let limit = 0;
     db.collection("users").doc(`${userID}`).collection(subID).onSnapshot((function (snapshot) {
         snapshot.forEach(function (doc) {
@@ -267,8 +266,13 @@ function percentUsed(userID) {
                 totalTime += doc.data()["time"];
             }
         });
-        console.log(limit, totalTime)
         let newPercent = (totalTime / limit * 100).toFixed(2) + "%";
+        if (newPercent === "NaN%") {
+            newPercent = "0%";
+        }
+        if (newPercent === "Infinity%") {
+            newPercent = "No limit"
+        }
         document.getElementById("used").innerHTML = newPercent;
         totalTime = 0;
     }));
@@ -292,10 +296,7 @@ function totalUsage(userID) {
 // Display total usage
 function showTotal(totalTime) {
     let usageTime = convertTime(totalTime);
-    let time = document.createElement("h4");
-    time.innerHTML = usageTime;
-    time.className = "total";
-    document.getElementById("total-right").appendChild(time);
+    document.getElementById("total-usage").innerHTML = usageTime;
 }
 
 //Show limit
@@ -326,6 +327,15 @@ function displayUsage(id, data) {
     usageLog.innerHTML = time;
     document.getElementById("date").appendChild(dayLog);
     document.getElementById("usage").appendChild(usageLog);
+}
+
+// Clear displayed logs
+function clearUsage(id) {
+    let div = document.getElementById(id);
+    console.log(div);
+    while (div.firstChild) {
+        div.removeChild(div.firstChild);
+    }
 }
 
 // Set usage limt
@@ -379,7 +389,7 @@ function addSub(className) {
                 'subscriptions': userSubList
             }, { merge: true })
         })
-        document.getElementById("instruction").style.display="none";
+        document.getElementById("instruction").style.display = "none";
     })
     document.getElementById("newSubName").value = "";
     document.getElementById("new-limit").value = "";
@@ -399,6 +409,7 @@ function showHide(show, hide) {
     }
 }
 
+// Show instruction for new user
 function instruction() {
     let ref = db.doc(`users/${userID}`).get().then(function (doc) {
         let user = doc.data();
@@ -408,9 +419,30 @@ function instruction() {
                 let user = doc.data();
                 let userSubList = user.subscriptions;
                 if (!userSubList) {
-                    document.getElementById("instruction").innerHTML="Add a subscription to begin";
+                    document.getElementById("instruction").innerHTML = "Add a subscription to begin";
                 }
             })
         }
     })
+}
+
+// Reset usage logs
+function reset() {
+    let subID = getSubID();
+    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
+        snapshot.forEach(function (doc) {
+            if (doc.id != "limit") {
+                db.collection("users").doc(`${userID}`).collection(subID).doc(doc.id).delete();
+            }
+            else if (doc.id == "limit") {
+                db.collection("users").doc(`${userID}`).collection(subID).doc("limit").set({
+                    'limit': 0
+                }, { merge: true })
+                document.getElementById("used").innerHTML = "0%";
+            }
+        });
+    })
+    showTotal(0);
+    clearUsage("date");
+    clearUsage("usage");
 }
