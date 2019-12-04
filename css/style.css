@@ -277,7 +277,11 @@ p.limit {
     padding-top: 1em;
 }
 
-.limit, .add {
+.limit {
+    display: none;
+}
+
+.add {
     display: none;
 }
 
