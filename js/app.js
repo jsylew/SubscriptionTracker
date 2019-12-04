@@ -392,13 +392,15 @@ function addSub(className) {
                 db.collection("users").doc(`${userID}`).collection(subID).doc("limit").set({
                     'limit': value * 3600000
                 }, { merge: true })
-
                 userSubList.push(subID)
                 db.collection("users").doc(`${userID}`).set({
                     'subscriptions': userSubList
                 }, { merge: true })
             })
             document.getElementById("instruction").style.display = "none";
+        }
+        else {
+            alert("This subscription already exists.")
         }
     })
     document.getElementById("newSubName").value = "";
