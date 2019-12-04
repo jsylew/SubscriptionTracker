@@ -387,16 +387,19 @@ function addSub(className) {
         if (!userSubList) {
             userSubList = [];
         }
-        Promise.all([user, value]).then(function () {
-            db.collection("users").doc(`${userID}`).collection(subID).doc("limit").set({
-                'limit': value * 3600000
-            }, { merge: true })
-            userSubList.push(subID)
-            db.collection("users").doc(`${userID}`).set({
-                'subscriptions': userSubList
-            }, { merge: true })
-        })
-        document.getElementById("instruction").style.display = "none";
+        if (!userSubList.includes(subID)) {
+            Promise.all([user, value]).then(function () {
+                db.collection("users").doc(`${userID}`).collection(subID).doc("limit").set({
+                    'limit': value * 3600000
+                }, { merge: true })
+
+                userSubList.push(subID)
+                db.collection("users").doc(`${userID}`).set({
+                    'subscriptions': userSubList
+                }, { merge: true })
+            })
+            document.getElementById("instruction").style.display = "none";
+        }
     })
     document.getElementById("newSubName").value = "";
     document.getElementById("new-limit").value = "";
