@@ -453,3 +453,15 @@ function reset() {
     clearUsage("date");
     clearUsage("usage");
 }
+
+// Log out
+function logout() {
+    localStorage.clear();
+    window.location.href = "index.html";
+}
+
+// Redirect to home
+function home() {
+    window.location.href = "home.html";
+}
+

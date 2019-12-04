@@ -11,9 +11,8 @@
 
 <body>
     <!-- HEADER -->
-    <div class="header_image">
-        <div class="header_block">
-        </div>
+    <div class="header_image" onclick="home()">
+        <div class="header_block"></div>
         <div class="header_text">
             <h1 id="header">TRACKER APP</h1>
         </div>
@@ -49,11 +48,17 @@
             <div id="usage" class="col-2"></div>
         </div>
         <div id="sectionID" class="table-containter">
-                <div class="col-1">
-            <button class="btn-green" onclick="reset()">RESET</button>
+            <div class="col-1">
+                <button class="btn-green" onclick="reset()">RESET</button>
+                <button class="btn-green" onclick="removeSub()">Remove</button>
             </div>
         </div>
 
+    </div>
+    <div class="section">
+        <div class="col-1">
+            <button class="btn-green" onclick="logout()">Log out</button>
+        </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>

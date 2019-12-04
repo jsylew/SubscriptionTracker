@@ -11,18 +11,20 @@
 
 <body>
     <!-- HEADER -->
-    <div class="header_image">
-        <div class="header_block">
-        </div>
+    <div class="header_image" onclick="home()">
+        <div class="header_block"></div>
         <div class="header_text">
             <h1 id="header">TRACKER APP</h1>
         </div>
+    </div>
+
+
     </div>
     <div id="firebaseui-auth-container"></div>
 
 
     <!-- USER INFO -->
-<!--     <div class="greeting">
+    <!--     <div class="greeting">
         <p id="userInfoID">USER INFO</p>
     </div>
  -->
@@ -30,7 +32,7 @@
     <!-- SUBSCRIPTIONS -->
 
     <div class="section">
-        
+
         <!-- GREETINGS-->
         <h3 class="greetings" id="userInfoID">USER INFO</h3>
 
@@ -86,17 +88,23 @@
 
     <div class="section">
         <div id="sectionID" class="table-containter">
-            <button id="add-sub" type="button" class="instructions btn-green" onclick="showHide('add', 'instructions')">Add sub</button><br>
+            <button id="add-sub" type="button" class="instructions btn-green"
+                onclick="showHide('add', 'instructions')">Add sub</button><br>
             <p class="instructions" id="instruction"></p>
             <label class="add" for="newSubName">Subscription Name</label>
             <input id="newSubName" class="add" type="string"><br>
             <label class="add" for="new-limit">Set Limit in Hours</label>
             <input id="new-limit" class="add" type="number"><br>
             <button type="button" class="add btn-green btn-set" onclick="addSub('add')">ADD</button>
-            <button type="button" class="add btn-green btn-set" onclick="showHide('instructions', 'add')">CANCEL</button>
-    
+            <button type="button" class="add btn-green btn-set"
+                onclick="showHide('instructions', 'add')">CANCEL</button>
+
         </div>
 
+    </div>
+
+    <div class="section">
+        <button class="btn-green" onclick="logout()">Log out</button>
     </div>
 
     <!-- SIGNOUT -->
