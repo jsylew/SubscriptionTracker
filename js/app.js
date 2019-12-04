@@ -426,7 +426,7 @@ function instruction() {
     })
 }
 
-// Reset usage logs
+// Reset usage logs and clear screen
 function reset() {
     let subID = getSubID();
     db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
@@ -445,4 +445,55 @@ function reset() {
     showTotal(0);
     clearUsage("date");
     clearUsage("usage");
+}
+
+
+// Delete sub
+function deleteSub() {
+    if (confirm("Are you sure you want to remove this subscription and all its data?")) {
+        let subID = getSubID();
+        let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+            let user = doc.data();
+            let userSubList = user.subscriptions;
+            let userFavList = user.favourites;
+            let length = userFavList.length;
+            Promise.all([user]).then(function () {
+                for (let i = 0; i < userSubList.length; i++) {
+                    if (userSubList[i] === subID) {
+                        userSubList.splice(i, 1);
+                    }
+                }
+                Promise.all([user]).then(function () {
+                    db.collection("users").doc(`${userID}`).set({
+                        'subscriptions': userSubList,
+                    }, { merge: true })
+                })
+            })
+            if (userFavList.includes(subID)) {
+                for (let i = 0; i < userFavList.length; i++) {
+                    if (userFavList[i] === subID) {
+                        userFavList.splice(i, 1);
+                    }
+                }
+
+                Promise.all([user]).then(function () {
+                    db.collection("users").doc(`${userID}`).set({
+                        'favourites': userFavList,
+                    }, { merge: true })
+                })
+            }
+
+            db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
+                snapshot.forEach(function (doc) {
+                    db.collection("users").doc(`${userID}`).collection(subID).doc(doc.id).delete();
+                })
+            })
+        })
+    }
+    else {
+        console.log("CANCELED");
+    }
+    setTimeout(function () {
+        window.location.href = "home.html";
+    }, 500);
 }
