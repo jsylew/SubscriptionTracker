@@ -24,6 +24,9 @@ still work.
 <h2>Built With</h2>
 <ul>
   <li>
+    <p>HTML, CSS, JavaScript</p>
+  </li>
+  <li>
     <a href="https://getbootstrap.com/">Bootstrap</a> - Styling and responsive design
   </li>
   <li>
