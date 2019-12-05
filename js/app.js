@@ -29,7 +29,7 @@ function splitSpace(name) {
 // Star and unstar subs and add/remove from list in db
 function favSub(userID) {
     let subID = getSubID();
-    let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+    let ref = db.doc(`users/${userID}`).get().then(function (doc) { // Reading from the database
         let user = doc.data();
         let userFavList = user.favourites;
         // If userFavList array doesn't exist, create empty one
@@ -44,7 +44,7 @@ function favSub(userID) {
                 }
             }
             Promise.all([user]).then(function () {
-                db.collection("users").doc(`${userID}`).set({
+                db.collection("users").doc(`${userID}`).set({ // Writing to the database
                     'favourites': userFavList,
                 }, { merge: true })
             })
@@ -59,7 +59,7 @@ function favSub(userID) {
             document.getElementById("star").src = "images/star.png";
             Promise.all([user]).then(function () {
                 userFavList.push(subID)
-                db.collection("users").doc(`${userID}`).set({
+                db.collection("users").doc(`${userID}`).set({ // Writing to the database
                     'favourites': userFavList,
                 }, { merge: true })
             })
@@ -71,7 +71,7 @@ function favSub(userID) {
 // Control star/unstar
 function showStar() {
     let subID = getSubID();
-    let ref = db.doc(`users/${userID}`).onSnapshot((function (doc) {
+    let ref = db.doc(`users/${userID}`).onSnapshot((function (doc) { // Reading from the database
         let user = doc.data();
         let userFavList = user.favourites;
         // if userFavList doesn't exist, create empty one
@@ -91,7 +91,7 @@ function showStar() {
 
 // Get favourites from db and pass to create starred trackers
 function setStarredTrackers(userID) {
-    let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+    let ref = db.doc(`users/${userID}`).get().then(function (doc) { // Reading from the database
         let user = doc.data();
         Promise.all([user]).then(function () {
             if (user.favourites) {
@@ -116,7 +116,7 @@ function makeStarredTracker(fav) {
 
 // Get subscription list from db
 function setSubscriptions(userID) {
-    let ref = db.doc(`users/${userID}`).onSnapshot(function (doc) {
+    let ref = db.doc(`users/${userID}`).onSnapshot(function (doc) { // Reading from the database
         let user = doc.data();
         Promise.all([user]).then(function () {
             if (user.subscriptions) {
@@ -185,10 +185,10 @@ function countTime(btnID) {
 // Add time to db
 function updateUserTime(value, btnID) {
     let date = new Date().toDateString() + " " + new Date().toTimeString();
-    let ref = db.doc('users/${userID}').get().then(function (doc) {
+    let ref = db.doc('users/${userID}').get().then(function (doc) { // Reading from the database
         let user = doc.data();
         Promise.all([user, value]).then(function () {
-            db.collection("users").doc(`${userID}`).collection(btnID).doc(date).set({
+            db.collection("users").doc(`${userID}`).collection(btnID).doc(date).set({ // Writing to the database
                 'time': parseInt(value),
             })
         })
@@ -219,7 +219,7 @@ function getSubID() {
 // Get usage logs from db
 function getLogs(userID) {
     let subID = getSubID();
-    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
+    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) { // Reading the usage logs from the database
         snapshot.forEach(function (doc) {
             displayUsage(doc.id, doc.data());
         });
@@ -252,7 +252,7 @@ function convertTime(time) {
 function showLimit(userID) {
     let subID = getSubID();
     let limit = 0;
-    db.collection("users").doc(`${userID}`).collection(subID).onSnapshot((function (snapshot) {
+    db.collection("users").doc(`${userID}`).collection(subID).onSnapshot((function (snapshot) { // Reading the user limit from the database
         snapshot.forEach(function (doc) {
             let key = Object.keys(doc.data());
             if (key == "limit") {
@@ -269,7 +269,7 @@ function percentUsed(userID) {
     let subID = getSubID();
     let totalTime = 0;
     let limit = 0;
-    db.collection("users").doc(`${userID}`).collection(subID).onSnapshot((function (snapshot) {
+    db.collection("users").doc(`${userID}`).collection(subID).onSnapshot((function (snapshot) { // Reading the usage logs from the database
         snapshot.forEach(function (doc) {
             let key = Object.keys(doc.data());
             if (key == "limit") {
@@ -295,7 +295,7 @@ function percentUsed(userID) {
 function totalUsage(userID) {
     let totalTime = 0;
     let subID = getSubID();
-    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
+    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) { // Reading the usage logs from the database
         snapshot.forEach(function (doc) {
             let key = Object.keys(doc.data());
             if (key != "limit") {
@@ -316,7 +316,7 @@ function showTotal(totalTime) {
 function showLimit(userID) {
     let subID = getSubID();
     let limit = 0;
-    db.collection("users").doc(`${userID}`).collection(subID).onSnapshot((function (snapshot) {
+    db.collection("users").doc(`${userID}`).collection(subID).onSnapshot((function (snapshot) { // Reading the user limit from the database
         snapshot.forEach(function (doc) {
             let key = Object.keys(doc.data());
             if (key == "limit") {
@@ -355,10 +355,10 @@ function clearUsage(id) {
 function setLimit() {
     let subID = getSubID();
     let value = document.getElementById("new-limit").value;
-    let ref = db.doc('users/${userID}').get().then(function (doc) {
+    let ref = db.doc(`users/${userID}`).get().then(function (doc) { // Reading from the database
         let user = doc.data();
         Promise.all([user, value]).then(function () {
-            db.collection("users").doc(`${userID}`).collection(subID).doc("limit").set({
+            db.collection("users").doc(`${userID}`).collection(subID).doc("limit").set({ // Writing the limit to the database
                 'limit': value * 3600000
             }, { merge: true })
         })
@@ -370,7 +370,7 @@ function setLimit() {
 // Get usage logs from db
 function getLogs(userID) {
     let subID = getSubID();
-    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
+    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) { // Reading the usage logs from the database
         snapshot.forEach(function (doc) {
             let key = Object.keys(doc.data());
             if (key != "limit") {
@@ -387,7 +387,7 @@ function getLogs(userID) {
 function addSub(className) {
     let subID = document.getElementById("newSubName").value;
     let value = document.getElementById("new-limit").value;
-    let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+    let ref = db.doc(`users/${userID}`).get().then(function (doc) { // Reading the user's subscriptions from the database
         let user = doc.data();
         let userSubList = user.subscriptions;
         if (!userSubList) {
@@ -395,11 +395,11 @@ function addSub(className) {
         }
         if (!userSubList.includes(subID)) {
             Promise.all([user, value]).then(function () {
-                db.collection("users").doc(`${userID}`).collection(subID).doc("limit").set({
+                db.collection("users").doc(`${userID}`).collection(subID).doc("limit").set({ // Writing the user's set limit to the database
                     'limit': value * 3600000
                 }, { merge: true })
                 userSubList.push(subID)
-                db.collection("users").doc(`${userID}`).set({
+                db.collection("users").doc(`${userID}`).set({ // Writing to the database
                     'subscriptions': userSubList
                 }, { merge: true })
             })
@@ -429,11 +429,11 @@ function showHide(show, hide) {
 
 // Show instruction for new user
 function instruction() {
-    let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+    let ref = db.doc(`users/${userID}`).get().then(function (doc) { // Reading the user's subscriptions from the database
         let user = doc.data();
         let userSubList = user.subscriptions;
         if (!userSubList) {
-            let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+            let ref = db.doc(`users/${userID}`).get().then(function (doc) { // Reading the user's subscriptions from the database
                 let user = doc.data();
                 let userSubList = user.subscriptions;
                 if (!userSubList) {
@@ -447,13 +447,13 @@ function instruction() {
 // Reset usage logs and clear screen
 function reset() {
     let subID = getSubID();
-    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
+    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) { // Reading to the database
         snapshot.forEach(function (doc) {
             if (doc.id != "limit") {
-                db.collection("users").doc(`${userID}`).collection(subID).doc(doc.id).delete();
+                db.collection("users").doc(`${userID}`).collection(subID).doc(doc.id).delete(); // Deleting documents from the database
             }
             else if (doc.id == "limit") {
-                db.collection("users").doc(`${userID}`).collection(subID).doc("limit").set({
+                db.collection("users").doc(`${userID}`).collection(subID).doc("limit").set({ // Writing to the database
                     'limit': 0
                 }, { merge: true })
                 document.getElementById("used").innerHTML = "0%";
@@ -480,7 +480,7 @@ function home() {
 function deleteSub() {
     if (confirm("Are you sure you want to remove this subscription and all its data?")) {
         let subID = getSubID();
-        let ref = db.doc(`users/${userID}`).get().then(function (doc) {
+        let ref = db.doc(`users/${userID}`).get().then(function (doc) { // Reading from the database
             let user = doc.data();
             let userSubList = user.subscriptions;
             let userFavList = user.favourites;
@@ -492,7 +492,7 @@ function deleteSub() {
                     }
                 }
                 Promise.all([user]).then(function () {
-                    db.collection("users").doc(`${userID}`).set({
+                    db.collection("users").doc(`${userID}`).set({ // Writing to the database
                         'subscriptions': userSubList,
                     }, { merge: true })
                 })
@@ -505,15 +505,15 @@ function deleteSub() {
                 }
 
                 Promise.all([user]).then(function () {
-                    db.collection("users").doc(`${userID}`).set({
+                    db.collection("users").doc(`${userID}`).set({ // Writing to the database
                         'favourites': userFavList,
                     }, { merge: true })
                 })
             }
 
-            db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) {
+            db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) { // Reading from the database
                 snapshot.forEach(function (doc) {
-                    db.collection("users").doc(`${userID}`).collection(subID).doc(doc.id).delete();
+                    db.collection("users").doc(`${userID}`).collection(subID).doc(doc.id).delete(); // Deleting usage logs (documents) from the database
                 })
             })
         })
