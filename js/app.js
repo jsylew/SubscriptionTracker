@@ -190,6 +190,7 @@ function updateUserTime(value, btnID) {
         Promise.all([user, value]).then(function () {
             db.collection("users").doc(`${userID}`).collection(btnID).doc(date).set({ // Writing to the database
                 'time': parseInt(value),
+                'createdDate': new Date().getTime()
             })
         })
     })
