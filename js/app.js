@@ -219,7 +219,7 @@ function getSubID() {
 // Get usage logs from db
 function getLogs(userID) {
     let subID = getSubID();
-    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) { // Reading the usage logs from the database
+    db.collection("users").doc(`${userID}`).collection(subID).orderBy('createdDate').get().then(function (snapshot) { // Reading the usage logs from the database
         snapshot.forEach(function (doc) {
             displayUsage(doc.id, doc.data());
         });
@@ -227,6 +227,12 @@ function getLogs(userID) {
         .catch(function (error) {
             console.log("Error getting documents: ", error);
         });
+}
+
+//test
+function testOrder(userID) {
+    let subID = getSubID();
+    db.collection("users").doc(`${userID}`).collection(subID).orderByKey()
 }
 
 // Convert usage log to hours, min, sec
@@ -246,22 +252,6 @@ function convertTime(time) {
     }
     usageTime = hours + ":" + minutes + ":" + seconds;
     return usageTime
-}
-
-// Display limit
-function showLimit(userID) {
-    let subID = getSubID();
-    let limit = 0;
-    db.collection("users").doc(`${userID}`).collection(subID).onSnapshot((function (snapshot) { // Reading the user limit from the database
-        snapshot.forEach(function (doc) {
-            let key = Object.keys(doc.data());
-            if (key == "limit") {
-                limit = doc.data()["limit"];
-            }
-        });
-        userLimit = convertTime(limit);
-        document.getElementById("usage-limit").innerHTML = userLimit;
-    }))
 }
 
 // Calc and display % used
@@ -367,21 +357,21 @@ function setLimit() {
     showHide('change-limit', 'limit');
 }
 
-// Get usage logs from db
-function getLogs(userID) {
-    let subID = getSubID();
-    db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) { // Reading the usage logs from the database
-        snapshot.forEach(function (doc) {
-            let key = Object.keys(doc.data());
-            if (key != "limit") {
-                displayUsage(doc.id, doc.data());
-            }
-        });
-    })
-        .catch(function (error) {
-            console.log("Error getting documents: ", error);
-        });
-}
+// // Get usage logs from db
+// function getLogs(userID) {
+//     let subID = getSubID();
+//     db.collection("users").doc(`${userID}`).collection(subID).get().then(function (snapshot) { // Reading the usage logs from the database
+//         snapshot.forEach(function (doc) {
+//             let key = Object.keys(doc.data());
+//             if (key != "limit") {
+//                 displayUsage(doc.id, doc.data());
+//             }
+//         });
+//     })
+//         .catch(function (error) {
+//             console.log("Error getting documents: ", error);
+//         });
+// }
 
 // Add sub
 function addSub(className) {
