@@ -21,6 +21,44 @@ Users can also set a limit for a subscription to track how much of their budget 
 The logos for available subscriptions is hardcoded, so not every subscription has a logo. However, the core functionalities
 still work.
 
+<h2>Files</h2>
+The top-level files and their descriptions.
+<h3>HTML</h3>
+<ul>
+  <li>
+    index.html - The landing page when users first go to the website.
+  </li>
+  <li>
+    Login.html - The login page.
+  </li>
+  <li>
+    home.html - The main page that contains the timers, the starred subscriptions, and the subscription logos. Users can add subscriptions on this page.
+  </li>
+  <li>
+    subscriptions.html - The page that loads subscription information dynamically. Users can set a limit and reset logs. Displays usage logs, usage limit and the amount of time they've spent towards their budget.
+  </li>
+  <li>
+    404.html - Error page.
+  </li>
+</ul>
+
+<h3>CSS</h3>
+<ul>
+  <li>
+    style.css - Contains all the styling for the website.
+  </li>
+</ul>
+
+<h3>JavaScript</h3>
+<ul>
+  <li>
+    app.js - Contains all the functions used in the website
+  </li>
+  <li>
+    firebase_setup.js - Loads Firebase on each page.
+  </li>
+</ul>
+
 <h2>Built With</h2>
 <ul>
   <li>
